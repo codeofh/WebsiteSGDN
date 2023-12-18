@@ -1,0 +1,1514 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+    Layout = null;
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var accountData = new marketplace.AccountCustomer();
+    marketplace.IAccountCustomer accountCustomer = Framework.EF.SingletonIpl.GetInstance<marketplace.IplAccountCustomer>();
+    if (mems != null)
+    {
+        accountData = accountCustomer.GetById(mems.AccID);
+    }
+}
+<html>
+
+<head>
+    <title>Exness WebTerminal</title>
+    <link href="~/Assets/assets_partner/css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="https://my.extrading.pro/cnf/favicon.ico">
+    <style>
+        .account-popup {
+            display: none;
+        }
+    </style>
+</head>
+
+<body id="root">
+    <div class="bp3-dark Layout_layout__ip4-w">
+        <div class="bp3-dark Layout_wrapper__KEiHw">
+            <div class="navigation">
+                <div data-test="wl-logo" class="NavigationMenuDesktop__Logo-sc-8ui8t2-0 eiITaK"></div>
+                <div class="navigation-menu" data-test="navigation">
+                    <div class="navigation-menu-buttons navigation-menu-buttons-desktop"
+                         data-test="navigation-menu-buttons">
+                        <div data-test="nav-button-watchlist" class="NavButton__Wrapper-sc-n45u84-1 bbRFqE navButton">
+                            <div class="NavButton__IconWrapper-sc-n45u84-2 btilfv">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                     class="IconApps__SVGStyled-sc-174iyu-0 fljkdl">
+                                    <circle cx="2" cy="2" r="2"></circle>
+                                    <circle cx="2" cy="8" r="2"></circle>
+                                    <circle cx="2" cy="14" r="2"></circle>
+                                    <circle cx="8" cy="2" r="2"></circle>
+                                    <circle cx="8" cy="8" r="2"></circle>
+                                    <circle cx="8" cy="14" r="2"></circle>
+                                    <circle cx="14" cy="2" r="2"></circle>
+                                    <circle cx="14" cy="8" r="2"></circle>
+                                    <circle cx="14" cy="14" r="2"></circle>
+                                </svg>
+                            </div>
+                            <div class="NavButton__TitleWrapper-sc-n45u84-0 hEGZWu">
+                                <div>Danh sách theo dõi</div>
+                            </div>
+                        </div>
+                        <div data-test="nav-button-trading_history"
+                             class="NavButton__Wrapper-sc-n45u84-1 bbRFqE navButton">
+                            <div class="NavButton__IconWrapper-sc-n45u84-2 btilfv">
+                                <svg class="IconContainer_icon__PlN8z IconHistory_icon__BUwLe"
+                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M13.382 21.308c-1.691 0-3.086-.311-4.406-.935-.484-.229-.96-.484-1.374-.83-.475-.398-.559-1.065-.214-1.586.338-.511.979-.689 1.53-.418.312.154.597.357.906.517a7.18 7.18 0 0 0 2.74.783 6.941 6.941 0 0 0 3.019-.414c1.67-.62 2.954-1.703 3.82-3.27.56-1.017.86-2.101.89-3.266.053-2.163-.716-3.99-2.277-5.464a6.89 6.89 0 0 0-4.228-1.894c-2.07-.18-3.894.426-5.45 1.8-1.304 1.15-2.048 2.614-2.333 4.322-.025.148.052.168.155.184l1.573.232c.133.02.268.034.395.07.305.09.39.42.172.649a.983.983 0 0 1-.125.106c-1.178.88-2.356 1.758-3.535 2.637-.285.212-.459.192-.683-.094-.94-1.2-1.878-2.402-2.817-3.603-.114-.146-.162-.302-.068-.475.089-.164.249-.23.47-.198.61.09 1.218.178 1.826.273.14.021.21 0 .233-.162a9.502 9.502 0 0 1 1.34-3.668 9.664 9.664 0 0 1 3.072-3.083 9.38 9.38 0 0 1 4.003-1.408 9.5 9.5 0 0 1 4.95.74 9.387 9.387 0 0 1 3.167 2.224 9.587 9.587 0 0 1 2.558 7.647 9.39 9.39 0 0 1-1.852 4.708c-1.315 1.749-3.028 2.93-5.14 3.523-.833.233-1.68.362-2.317.353zm1.542-11.272c0 .792-.003 1.585.003 2.378a.335.335 0 0 1-.152.305c-1.254.92-2.513 1.832-3.753 2.77-.748.566-1.766.062-1.892-.708-.085-.52.1-.917.515-1.222.904-.665 1.805-1.333 2.714-1.99a.443.443 0 0 0 .21-.408c-.009-1.11-.004-2.22-.005-3.33 0-.381.098-.72.396-.983.368-.325.786-.42 1.237-.223.441.192.714.537.722 1.032.013.793.004 1.586.004 2.379h.001z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="NavButton__TitleWrapper-sc-n45u84-0 hEGZWu">
+                                <div>Lịch sử</div>
+                            </div>
+                        </div>
+                        <div data-test="nav-button-terminal" class="NavButton__Wrapper-sc-n45u84-1 bbRFqE navButton">
+                            <div class="NavButton__IconWrapper-sc-n45u84-2 btilfv">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                     class="IconTerminal__SVGStyled-sc-1qdiza1-0 xjSfD">
+                                    <path d="M13.148 17.978h-2.68v-7.479h-.059l-2.963 7.479H5.703l-2.955-7.479H2.68v7.479H0V6h3.52l3.021 7.828h.066L9.63 6h3.52v11.978zm7.629 0h-3.038V8.457h-3.304V6h9.646v2.457h-3.304v9.521z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="NavButton__TitleWrapper-sc-n45u84-0 hEGZWu">
+                                <div>Thiết bị đầu cuối MetaTrader </div>
+                            </div>
+                        </div>
+                        <div data-test="nav-button-support" class="NavButton__Wrapper-sc-n45u84-1 bbRFqE navButton">
+                            <div class="NavButton__IconWrapper-sc-n45u84-2 btilfv">
+                                <svg size="24"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     class="IconSupport__SVGStyled-sc-dinf83-0 RqkXg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M5.36096 16.5674L6.0638 16.9646C7.74439 17.9145 9.71175 18.2246 11.603 17.8378C13.4943 17.451 15.1819 16.3933 16.3546 14.8599C17.5273 13.3265 18.106 11.4208 17.984 9.49427C17.862 7.5677 17.0474 5.75024 15.6906 4.37709C14.3338 3.00393 12.5262 2.16771 10.6012 2.02264C8.67625 1.87757 6.76375 2.43344 5.21644 3.58773C3.66914 4.74202 2.5914 6.41687 2.182 8.30338C1.7726 10.1899 2.05915 12.1608 2.9888 13.8526L3.35255 14.5146L2.74294 17.244L5.36096 16.5674ZM5.07975 18.7058C7.18048 19.8931 9.63968 20.2807 12.0038 19.7972C14.3679 19.3137 16.4774 17.9916 17.9433 16.0749C19.4092 14.1582 20.1326 11.776 19.98 9.36783C19.8275 6.95963 18.8093 4.6878 17.1132 2.97136C15.4172 1.25491 13.1577 0.20963 10.7515 0.0282917C8.34531 -0.153047 5.95468 0.541793 4.02055 1.98466C2.08642 3.42752 0.739244 5.52109 0.227493 7.87923C-0.284259 10.2374 0.0739293 12.701 1.236 14.8158L0.35999 18.738C0.231281 19.3142 0.757122 19.8229 1.32881 19.6752L5.07975 18.7058Z">
+                                    </path>
+                                    <path d="M7 10.25C7 10.9404 6.44036 11.5 5.75 11.5C5.05964 11.5 4.5 10.9404 4.5 10.25C4.5 9.55964 5.05964 9 5.75 9C6.44036 9 7 9.55964 7 10.25Z">
+                                    </path>
+                                    <path d="M11.25 10.25C11.25 10.9404 10.6904 11.5 10 11.5C9.30964 11.5 8.75 10.9404 8.75 10.25C8.75 9.55964 9.30964 9 10 9C10.6904 9 11.25 9.55964 11.25 10.25Z">
+                                    </path>
+                                    <path d="M15.5 10.25C15.5 10.9404 14.9404 11.5 14.25 11.5C13.5596 11.5 13 10.9404 13 10.25C13 9.55964 13.5596 9 14.25 9C14.9404 9 15.5 9.55964 15.5 10.25Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="NavButton__TitleWrapper-sc-n45u84-0 hEGZWu">
+                                <div>Hỗ trợ</div>
+                            </div>
+                        </div>
+                        <div data-test="nav-button-logout_button_id"
+                             class="NavButton__Wrapper-sc-n45u84-1 bbRFqE navButton navigation-menu-logout-button">
+                            <div class="NavButton__IconWrapper-sc-n45u84-2 btilfv">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     class="IconLogout__SVGStyled-sc-17agn3z-0 jdeVkx">
+                                    <path d="M13 10.998L12 10l1-1H5V7h8l-1-.999L13 5l3 3.001-3 2.997zM14 .001a2 2 0 0 1 2 2v3L14 4V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-.999l2-1.003V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2l12 .002z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="NavButton__TitleWrapper-sc-n45u84-0 hEGZWu">
+                                <div>Đăng xuất</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Resizable_container__SgGSc NavigationMenuPanel_container__mLHyi"
+                         style="height: 0px; width: 360px;">
+                        <div class="NavigationMenuPanel_wrapper__34Upy navtoggle NavigationMenuPanel_isShown__Mbnuy"
+                             data-test="navigation-panel" data-role="navigation-panel">
+                            <div class="NavigationMenuPanel_headerWrapper__p470s">
+                                <div class="NavigationMenuPanel_header__zkGJM">Danh sách theo dõi</div>
+                                <div class="NavigationMenuPanel_iconClose__vpUcq">
+                                    <svg class="IconContainer_icon__PlN8z"
+                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <g>
+                                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="NavigationMenuPanel_divider__PdC1r"></div>
+                            <div class="NavigationMenuPanel_content__bLc4f">
+                                <div class="WatchListPanel__WatchListDesktop-sc-kvbxiy-0 kEA-dyR WatchList_assetListWrapper__dWX4H"
+                                     data-test="asset-popup-list-wrapper">
+                                    <span class="bp3-popover-wrapper WatchListColumnsDialog_watchListColumnsDialog__bDxsi">
+                                        <span aria-haspopup="true" class="bp3-popover-target">
+                                            <span class="">
+                                                <div class="WatchListButton_button__gyDa6" data-test="more_button">
+                                                    <svg class="IconContainer_icon__PlN8z"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="16"
+                                                         height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                        <circle cx="8" cy="2" r="2"></circle>
+                                                        <circle cx="8" cy="8" r="2"></circle>
+                                                        <circle cx="8" cy="14" r="2"></circle>
+                                                    </svg>
+                                                </div>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="WatchListChangeViewButton_button__r7Y3u" data-tip="true"
+                                         data-for="сhangeViewButton">
+                                        <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                            <span class="bp3-popover-wrapper">
+                                                <span aria-haspopup="true"
+                                                      class="bp3-popover-target">
+                                                    <div class="WatchListButton_button__gyDa6"
+                                                         data-test="сhange-view-button">
+                                                        <svg class="IconContainer_icon__PlN8z"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16"
+                                                             height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                  d="M2 3V5H5V3H2ZM1 9C0.447715 9 0 9.44772 0 10V14C0 14.5523 0.447715 15 1 15H6C6.55228 15 7 14.5523 7 14V10C7 9.44772 6.55228 9 6 9H1ZM2 11V13H5V11H2ZM11 3V5H14V3H11ZM11 11V13H14V11H11ZM0 2C0 1.44772 0.447715 1 1 1H6C6.55228 1 7 1.44772 7 2V6C7 6.55228 6.55228 7 6 7H1C0.447715 7 0 6.55228 0 6V2ZM9 2C9 1.44772 9.44772 1 10 1H15C15.5523 1 16 1.44772 16 2V6C16 6.55228 15.5523 7 15 7H10C9.44772 7 9 6.55228 9 6V2ZM9 10C9 9.44772 9.44772 9 10 9H15C15.5523 9 16 9.44772 16 10V14C16 14.5523 15.5523 15 15 15H10C9.44772 15 9 14.5523 9 14V10Z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <form class="WatchList_assetListForm__wbeUb WatchList_fullWidth__JWAHz"
+                                          method="POST">
+                                        <div class="Input__Container-sc-149idj4-0 gBRCOv">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18"
+                                                 class="IconSearch__SVGStyled-sc-5eejhw-0 kqoRhq">
+                                                <path d="M6.5 0C8.22391 0 9.87721 0.684819 11.0962 1.90381C12.3152 3.12279 13 4.77609 13 6.5C13 8.11 12.41 9.59 11.44 10.73L11.71 11H12.5L17.5 16L16 17.5L11 12.5V11.71L10.73 11.44C9.55055 12.4468 8.05071 12.9999 6.5 13C4.77609 13 3.12279 12.3152 1.90381 11.0962C0.684819 9.87721 0 8.22391 0 6.5C0 4.77609 0.684819 3.12279 1.90381 1.90381C3.12279 0.684819 4.77609 0 6.5 0ZM6.5 2C4 2 2 4 2 6.5C2 9 4 11 6.5 11C9 11 11 9 11 6.5C11 4 9 2 6.5 2Z">
+                                                </path>
+                                            </svg><input type="search" placeholder="Tìm kiếm"
+                                                         data-test="asset-popup-search" value="">
+                                        </div>
+                                        <div class="bp3-popover-wrapper bp3-fill">
+                                            <div aria-haspopup="true" class="bp3-popover-target">
+                                                <div class="">
+                                                    <button class="Select__StyledButton-sc-s9qfyf-5 fPdPoR"
+                                                            type="button">
+                                                        <span class="Select__ButtonContent-sc-s9qfyf-6 fMfCCR">
+                                                            Mục yêu
+                                                            thích
+                                                        </span><svg class="IconArrowSmall__SVGStyled-sc-1yqwrvk-0 ekZFDJ Select__IconArrowSmallStyled-sc-s9qfyf-3 inrbdZ"
+                                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
+                                                            <g transform="rotate(180 4 4)">
+                                                                <polygon points="0 3 8 3 4 7 0 3"></polygon>
+                                                            </g>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="WatchList_assetListContainer__pEzVC">
+                                        <div class="WatchList_assetListOverflow__5br9j">
+                                            <div class="WatchListHeader_container__XYBm7" data-test="watch_list_header">
+                                                <div class="CommonColumn_column__eImEd WatchListHeader_headerColumn__IC7Oe CommonColumn_symbol__9IQqA"
+                                                     data-test="symbol">Mã</div>
+                                                <div class="CommonColumn_column__eImEd WatchListHeader_headerColumn__IC7Oe CommonColumn_signal__sh6IS"
+                                                     data-test="signal">Tín hiệu</div>
+                                                <div class="CommonColumn_column__eImEd WatchListHeader_headerColumn__IC7Oe CommonColumn_bid__Lg2ES"
+                                                     data-test="bid">Giá mua</div>
+                                                <div class="CommonColumn_column__eImEd WatchListHeader_headerColumn__IC7Oe CommonColumn_ask__S895q"
+                                                     data-test="ask">Giá bán</div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="BITSTAMP:BTCUSD" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-BTC">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_BTCUSD"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480" class="single-flag"
+                                                                             style="background-image: url(https://cdn-icons-png.flaticon.com/512/5968/5968260.png); background-size: contain;">
+                                                                            <use xlink:href="#btc"></use>
+                                                                        </svg>
+                                                                    </div>BTC
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorPositive__Ivpk0"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 eKTYkc">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        30,816.96
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        30,832.70
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="OANDA:XAUUSD" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-XAU/USD">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_XAUUSD"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/metal/gold.svg); background-size: contain;">
+                                                                            <use xlink:href="#xau"></use>
+                                                                        </svg><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                   xlink:href="http://www.w3.org/1999/xlink"
+                                                                                   viewBox="0 0 480 480"
+                                                                                   style="background-image: url(https://s3-symbol-logo.tradingview.com/country/US.svg); background-size: contain;">
+                                                                            <use xlink:href="#usd"></use>
+                                                                        </svg>
+                                                                    </div>XAU/USD
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorNegative__pmVdR"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 gQgLRz">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        2,040.153
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        2,040.353
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="NASDAQ:AAPL" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-AAPL">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_AAPL"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480" class="single-flag"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/apple.svg); background-size: contain;">
+                                                                            <use xlink:href="#aapl"></use>
+                                                                        </svg>
+                                                                    </div>AAPL
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorPositive__Ivpk0"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 eKTYkc">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU">164.80</div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU">165.00</div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="FX:EURUSD" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-EUR/USD">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_EURUSD"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/country/EU.svg); background-size: contain;">
+                                                                            <use xlink:href="#eur"></use>
+                                                                        </svg><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                   xlink:href="http://www.w3.org/1999/xlink"
+                                                                                   viewBox="0 0 480 480"
+                                                                                   style="background-image: url(https://s3-symbol-logo.tradingview.com/country/US.svg); background-size: contain;">
+                                                                            <use xlink:href="#usd"></use>
+                                                                        </svg>
+                                                                    </div>EUR/USD
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorPositive__Ivpk0"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 eKTYkc">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        1.10642
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        1.10652
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="GBPUSD" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-GBP/USD">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_GBPUSD"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/country/GB.svg); background-size: contain;">
+                                                                            <use xlink:href="#gbp"></use>
+                                                                        </svg><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                   xlink:href="http://www.w3.org/1999/xlink"
+                                                                                   viewBox="0 0 480 480"
+                                                                                   style="background-image: url(https://s3-symbol-logo.tradingview.com/country/US.svg); background-size: contain;">
+                                                                            <use xlink:href="#usd"></use>
+                                                                        </svg>
+                                                                    </div>GBP/USD
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorNegative__pmVdR"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 gQgLRz">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        1.25160
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        1.25172
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="USDJPY" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-USD/JPY">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_USDJPY"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/country/US.svg); background-size: contain;">
+                                                                            <use xlink:href="#usd"></use>
+                                                                        </svg><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                   xlink:href="http://www.w3.org/1999/xlink"
+                                                                                   viewBox="0 0 480 480"
+                                                                                   style="background-image: url(https://s3-symbol-logo.tradingview.com/country/JP.svg); background-size: contain;">
+                                                                            <use xlink:href="#jpy"></use>
+                                                                        </svg>
+                                                                    </div>USD/JPY
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorNegative__pmVdR"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 gQgLRz">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        132.439
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        132.447
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="SIX:USTEC.USD" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-USTEC">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_USTEC"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480" class="single-flag"
+                                                                             style="background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAADSdJREFUaEPVmw10FNUVx/93NgECBAV2ElApHtRq1ar1g5KdgKAHAsEiqAFR2YC10iNtFUQOaEUr1uaIoFXwi1JJUKwoVKyELGJJJbMRlSqogIKtHxTIThIwGz5iNnN73m52dmb2exOofedwgJn37tzf+7r33fuWcAILH3JdggCuAnAaQP0A9Ae4P4j6gZEL4ABABwA+GPo3H4Ak7URr90rqt/HIiVCNOlsoNygj0cZjQSgG6JwOyK8EUyWyA+up97tfdkCOpWmnAHNd4SBImAtwCYBTO0s5k5z3odMSyq+p6KjsDgHzvsF90TV7LoDZHVUkpfaMdyFxGTm961KqH6NSRsDMJQ5oB+aBWMD2SPLx7QBvBaTQGhVrlcTfejMg9Ucb9Yck1rfeHyQNhB5cDjkJZTJ7QFIZyTXV6YKnDcx1BS5IkphaZ8X9GGETGJUAKklWP0tHKWYQ6gvGAo5iEBeDMTBB+8dIVu9JR35awFznmgKJYq8jgg6gDFn0GJ1acygdJRLV5UZlDNrE/oBhMesx/gpkuymvujmVb6YMzFrhgwA/EFMoYSkou4z6Vu9L5aOZ1GHNdSNAAvziqPaMHWByU37N9mSyUwJmTVkJ4JYYH1oLB+ZTX/XTeB968EGWBhXsuYLb6AKWeBAx5QM45UXP3sbaXdoxIvjAdJChf6lD2n3UM0Ws87iFNWU6gGcA2HU/Ah1uylfXJmqfFDguLLCQZHVOPOEtLYHJDKkE4Amx6oy/9y2on9TFenUYwNMMXtXsmRqzI7nOVQCiChDOjhZAIxJtZgmBE0zjX5KsPmf/GG/enHW8j/MeZv51yKuKX6a/8Ble33002QzcwKQ/2lw1LWo35oOuPEioAFGRTcg3kBwK9X3nm1jC4wLH2aAOgMhNzppNdmGHrhs/FYQXkhGE3y/oNw7L9jpSrb4ykI15x94s/U9UJ/tcS0F0h+15NcnqiJSB202PGtWAaKQd1ldS0rOL3vocAzelqr2olyZwUDSBbm7yuFdFQWuuVQBNtj1fTrJ6m71u1AgHnYr6/cJ22u1s1DRuvH7cRQRpM4A+6cBmChyCxoImT+l88/eYh2ehPqACPNiqB99Nsnex+Vk0sK/wtyBeYAOI2qAaSiYUSDq/mQlsR4BFWwaWNHtKxT5hFNaUc0FQwehrPCQ0INBjoPnkZQFu942/sriLjLWUp15vFh4eWZLz+kjnX5Du4Abrz/jitFQ2rUSyF/s9pXdboH1KMQjrLY2IHyan9/7wMyuwpiyMOghIuNBsZ8WazdZbRaf0cVw5Al2m/yoj4ARmKWV5BJrZ5HE/YRvpPwH4uWmUA8I9JVnd374kQq9CRzz+wto7WEpO1UJ0+PrxL4U3qP81cEhXaZjfM2VLWG/2FZwNkvbYOJ4ip/obK7BW+DzAvzD1jA7KHmh2F+2mxwzcumY1Am+EnJycJ54GevfBoy/vwMKXd6Q8YhlVJHzgryq9wjrKhYsAnmWRx44fUt47e4wpzZoiHP7I4Z3wCDnV+4ye27w56/CSP7aahdhHOAi95pUQ9NJlJw8aNNvvcS8ydD0wVEaWLpad+Zg5h2R1YRA4GJbRsdHSI9nUx3zqObb943nHH7r/kUTA4l0YWhp4JrrOua/D0GfQUezj7skGP+DvldMDr078zoCO3o+CzkgI2Od6AkR3mqbzJnKqI81fOfrRjv0tC+Zb3MV4a7izoEuyvsIN2V/jtdYfYB/3QG2bMy64fQNjTRGe1t8tDdo4PwSsuT63Bdxmkaw+Hq4sDgJtu3auallgsfdItGl1BvQrOVtQ4KgPqnH38UvxaiBBLIDpY/9G90XWtaxoACK9xDyNQqFU+tDWdeeZIxXHW/Q1+q5PrksELDaoOZMt3+vQ9Bagi7ptg5jSogjYx1vOSzi9JZ2u+PYt9wfGtPYp5SC4TTP3VWLNNQsgY8ED2E6yeonRiJlavtN1fdenSAQsj3sR90y+qFOhxZQektWAM+gIJh0bmmwdCw9sfrOn1PASuUGZCB2hXTRUDgvgxwAyeSz8PMleccgOlvKqfw2eNGLg1lSARf1UoTvD8bD3AIPfavZMHWUMlqacBsBywiLWlBcB3BxpTL8jueZBA7hyz62Trh60PFXgZNDivTBZ4xduixcASDqSiSr4PaURUxsMCCoi1haZ1awpbwPBdEi4WE5FK6o+f/jGEWfdlw5wKtAzBrjxt13+DsHFauyvP94F26Yb/gJrinApDesipvROgH5kanwtyeobxghv2LNs0lWDbksXOBl0rPOw2KgSmZ6wTolsc7eW5lyteoYRwWTNtQ2gS8NtieuVRjB6m8Z8MDm975uAV0+6alBJJsCJoB9QjxkRj5lddmOIQ8MA6Si+0bsn3KBEp4Rts5Bv76CstpxTD22a+G1kHRe+CfDYCLCmiOHPigC3nU/Od3eF/z/yrg3POhw0XQ74If6Yi5aVC/FHlDgBueA75UIRqLSWgzv34gs91FYAz+wS+qQwP8LmxipiZIWpCttmsXPbgR0teu/D1dNEIDBYWFP+AmCSGfhrAANMI3w1Ob2Gh9KzqOJxAt8VU4NOeCggChwaFnX7pwEcz94KUOGMhIuAtZurbMlxSuOGW5pMwP8wB/GJtcKtltCIjlsoX30p3CB3dMU8MFt86E7gjBIhRnmfnpPUhRS2eWbX3XGnvr+poTtqZx0zgH2uz0GRtK0wSyITNy6iAc0mucZwRHJHld8KwvITAZmJzGSHCb/HLQHEphEWox1aOyImxpryLADD0QB4EcleI/3Zs6hcnDCsTngmmp6cNp/6PaUXmmAFqDG924FdDwBkOBogeo2cNSKxHSzdi1b2d0APhkf+D8qf/Z5SI7zDvoKfgKTQ5hAqTNxQWAKdV0ce4RhktQeRcE1DJbeo3Boc+J6S2+PWHB2B/Yj44KgecByxpRr1n5FcK0KwYeDfA7j3e8ppqNWtJSdXq54YcTp8iheEAqOCiOIEx1lTRGizOAJEz5BcY6QvehatuIBAn5xs4LC9Fc5I8qgHVfg97lJj7jb89AzoWdb8ki4Vtkc8CmeAeImpJ74ip3qmGTC3qFxk9MecLOiwMyJAa9vkuM6ISeeh/qrSGgNYK7wdYHPCbz/J6ukh4ENDzkTA8W8LjAPF1EfdEH7Wc0zFlaRz2ncqMukgu0cloCceHZpolNf5PaXjzd9in7IRBFOYipaRXHO7OWr5HgBzuPMdktUrbaMsrjtMyQQinTbhKIe3hyfYLFl4h0gf3FQ1zfD/ub5wApitiXHSJ5Cz9vUIcF2hGxKXWxXjySR7hS8aLDnXlJ+e1YoTdq3B3iliDYv1K0qCNfyI31NqhJNDe5JrK0DmxNqHJKtBB92aavEptSAMMX3YEu4Rz3sVVdzEYMP1TGfkOr8uVfs9bksemH2uqSCy5qklTKK+atD0WoHrXdeC6XWbYlFp0l5F5Q8xYCSoOh8kJYmNDtIvO1w1zXItkTVlN4BzTRIsyfEY6VJXle0aAUNnhfK9tWY1ehaVP0VAZpm0lHgSVmokYEyTp1TsO0ZhTVkGwJoEl/TR1Lc2tBnEuAkD1gqHAyyS3CZJ2BuE7uf1mR/nFpWLQ4Y1h9NxmGQSYsPWK3PB+IOt8TqSVcvuHfOOB8dKmzJ7KM872q5Nr1ErZjKRJcueTOPM31O1g9qmRU1ju3scGspGQFfIWSumuFHiX2rxKWtBsF45Yn6a8rwz7ArnFq0cCtIXg3F55jBJW0btxqIFa0MvBXRxH6WbVQJfQ7LXmhyPNaXDjdg3vCfQqoJgTSeAX4azi5uoOhAFPmrFbBCJaRUJGSXlSFphnaTTw+aMgqFjaGSFb2CFZb6T8rxPxpKc+J5WXeHFkFj0nu3GLL0HsDvmxdGS1V16NR2/gxm3gvjHSXHiVhAXz3iZ2V20bCux1yxA9CQ5ayKJQZv85Dfx6pTrIGFNlF7iwoi46penCh87ZjllZMXlbQ59NBjDCGTJRsZoIG7dbSXQ211bur1hPvXY68bcjUOVojYpe9ukwKF1Ety5xdSJBPsikpaD9TLKq92bdDQvey5bzg10DWTJDg4cISknW2887GtF7czj5rBMPDntToW4YGq2s6HqSUY2LDMl4CB0w7AB0NsE9PDYCtFiBKiM+m8RKcpOLVxXOAGSPtfmLka+kWDNZjTClrWjKdZbMlaJIlq4tP1iuNWWp9kFHDzPZheD+QbrqcckSJgeFntJ9G4c73Mpj7AV2jULRPdaLoFFf6E+eCvegfXQUQOnesAcNoqxLnPB+tmAYyzA4r5VJFIRW/t1IH2u3c4m69eMgINTXISGsprFNBMeTqpmqP13D8HfP4hQTOh3TKHfNBmh1CRKV0PSy8zuYjJI8/uMgcNCWORgCQLachUwHSVSrPshJJSFTz0ptomq1mFgA9w37BxQm/BbRWwszsaWtpr7AVoPaqsUh/e0W8do0GnAljUeurxdDInEr1KE/U31x1siNLwdhEq0SZWUvyX6CnMHqf8L+uG3sDyYMMgAAAAASUVORK5CYII='); background-size: contain;">
+                                                                            <use xlink:href="#ustec"></use>
+                                                                        </svg>
+                                                                    </div>USTEC
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorPositive__Ivpk0"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 eKTYkc">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        13,065.64
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_up__laucd">
+                                                        13,069.33
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="WatchList_watchlistItem__C7uuQ bp3-popover-dismiss"
+                                                 data-symbol="TVC:USOIL" data-test="asset-popup-list-item">
+                                                <div class="WatchList_watchlistSymbolContainer__argq4" data-tip="true"
+                                                     data-for="watchlistSymbol-USOIL">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <div class="WatchList_watchlistSymbol__Cifa3"
+                                                                     tabindex="0">
+                                                                    <div class="flag-icon-area WatchList_watchlistFlagIcon__7i+7V"
+                                                                         data-test="flag_icon_USOIL"
+                                                                         style="width: 16px; height: 16px;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                                             viewBox="0 0 480 480" class="single-flag"
+                                                                             style="background-image: url(https://s3-symbol-logo.tradingview.com/crude-oil.svg); background-size: contain;">
+                                                                            <use xlink:href="#usoil"></use>
+                                                                        </svg>
+                                                                    </div>USOIL
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_WatchListSignalColumn__uY6AE">
+                                                    <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                        <span class="bp3-popover-wrapper">
+                                                            <span aria-haspopup="true"
+                                                                  class="bp3-popover-target">
+                                                                <button class="WatchList_WatchListSignalIndicator__nYXc5 WatchList_WatchListSignalIndicatorNegative__pmVdR"
+                                                                        tabindex="0">
+                                                                    <div class="SignalIndicator_SignalIndicator__EzjGV">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             viewBox="0 0 9 12"
+                                                                             class="IconBowArrow__SVGStyled-sc-kzcqly-0 gQgLRz">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M0.896447 4.07843L4.07843 0.896446C4.27369 0.701184 4.59027 0.701184 4.78553 0.896446L7.96751 4.07843C8.16278 4.27369 8.16278 4.59027 7.96751 4.78553C7.77225 4.9808 7.45567 4.9808 7.26041 4.78553L4.93198 2.45711L4.93198 11.25L3.93198 11.25L3.93198 2.45711L1.60355 4.78553C1.40829 4.9808 1.09171 4.9808 0.896447 4.78553C0.701185 4.59027 0.701185 4.27369 0.896447 4.07843Z">
+                                                                            </path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        82.340
+                                                    </div>
+                                                </div>
+                                                <div class="WatchList_watchlistPrice__jMM4D">
+                                                    <div class="WatchList_price__C3BAU WatchList_down__G1mng">
+                                                        82.402
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Resizable_horisontalResizer__YmVmZ" data-position="right" data-test="right-resizer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="TradingPage_tradingArea__1l2mI" id="tradingPage">
+                <header>
+                    <div class="TradingPage_navbar__g+ksZ">
+                        <div class="InstrumentScrollableTabs__Container-sc-1shepm7-0 iivNKN">
+                            <div class="InstrumentScrollableTabs__Wrapper-sc-1shepm7-1 hLGugr">
+                                <div width="890" height="73"
+                                     class="InstrumentScrollableTabs__TabsContainer-sc-1shepm7-2 fnRNJb">
+                                    <div data-test="asset-tabs-container" class="asset-tabs-container">
+                                        <div class="asset-tabs-desktop-sub-container" data-rbd-droppable-id="droppable"
+                                             data-rbd-droppable-context-id="0">
+                                            <div class="bp3-popover-dismiss asset-tab asset-tab-active"
+                                                 data-test="asset-tab" data-key="asset-tab-5" index="0"
+                                                 data-rbd-draggable-context-id="0" data-rbd-draggable-id="5" tabindex="0"
+                                                 role="button" aria-describedby="rbd-hidden-text-0-hidden-text-0"
+                                                 data-rbd-drag-handle-draggable-id="5"
+                                                 data-rbd-drag-handle-context-id="0" draggable="false">
+                                                <div class="asset-tab-info">
+                                                    <div class="flag-icon-area" data-test="flag_icon_EURUSD"
+                                                         style="width: 32px; height: 32px;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                             xlink:href="http://www.w3.org/1999/xlink"
+                                                             viewBox="0 0 480 480"
+                                                             style="background-image: url(&quot;/webtrading/static/media/default.aae43ca1e811852c209b42d4efcf919e.svg&quot;); background-size: contain;">
+                                                            <use xlink:href="#eur"></use>
+                                                        </svg><svg xmlns="http://www.w3.org/2000/svg"
+                                                                   xlink:href="http://www.w3.org/1999/xlink"
+                                                                   viewBox="0 0 480 480"
+                                                                   style="background-image: url(&quot;/webtrading/static/media/default.aae43ca1e811852c209b42d4efcf919e.svg&quot;); background-size: contain;">
+                                                            <use xlink:href="#usd"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="asset-tab-symbol">EUR/USD</div>
+                                                </div>
+                                                <div class="asset-close">
+                                                    <svg class="IconContainer_icon__PlN8z"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="10"
+                                                         height="10" viewBox="0 0 24 24" fill="white">
+                                                        <g>
+                                                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+                                                            </path>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="AccountButton__Wrapper-sc-x1mu1c-0 kHBPIx TradingPage_accountButton__nEHBh"
+                             data-test="account-button">
+                            <span class="bp3-popover-wrapper">
+                                <span aria-haspopup="true"
+                                      class="bp3-popover-target">
+                                    <div class="AccountButton__ButtonContainer-sc-x1mu1c-7 bfhmOk">
+                                        <div class="AccountButton__ButtonContent-sc-x1mu1c-5 iKheDc">
+                                            <div class="BasicAccountInformation__HeaderWrap-sc-54h99l-1 bNDXZe">
+                                                <span color="var(--c-demo)"
+                                                      class="BasicAccountInformation__TradingMode-sc-54h99l-2 kiSdqq">
+                                                    Số dư
+                                                </span><span class="BasicAccountInformation__AccountIdentifier-sc-54h99l-3 fdXyjI">
+                                                </span>
+                                            </div>
+                                            <div class="AccountButton__BalanceWrapper-sc-x1mu1c-1 bHZsOO">
+                                                <div style="direction: ltr;">
+                                                    <div class="AccountButton__AnimatedNumberStyled-sc-x1mu1c-3 eLEBHm"
+                                                         data-role="account-balance"><span>@PTEcommerce.Business.Helper.NumberFormat(accountData.AmountAvaiable)</span></div>
+                                                    </div>
+                                                    <div class="AccountButton__Currency-sc-x1mu1c-4 hliNnR">USD</div>
+                                                    <div class="AccountButton__Arrow-sc-x1mu1c-6 ezKsdh"></div>
+                                                </div>
+                                            </div>
+                                            <div class="AccountButton__FreeMarginWrapper-sc-x1mu1c-2 jPACih"></div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="AppsDropDown__Wrapper-sc-12ur4m6-2 ejMfal" data-test="account-button">
+                                <span class="bp3-popover-wrapper">
+                                    <span aria-haspopup="true" class="bp3-popover-target">
+                                        <div class="AppsDropDown__AppsIconContainer-sc-12ur4m6-1 ZluQy">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                 class="IconApps__SVGStyled-sc-174iyu-0 fljkdl">
+                                                <circle cx="2" cy="2" r="2"></circle>
+                                                <circle cx="2" cy="8" r="2"></circle>
+                                                <circle cx="2" cy="14" r="2"></circle>
+                                                <circle cx="8" cy="2" r="2"></circle>
+                                                <circle cx="8" cy="8" r="2"></circle>
+                                                <circle cx="8" cy="14" r="2"></circle>
+                                                <circle cx="14" cy="2" r="2"></circle>
+                                                <circle cx="14" cy="8" r="2"></circle>
+                                                <circle cx="14" cy="14" r="2"></circle>
+                                            </svg>
+                                        </div>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="DepositButton__Wrapper-sc-z1m61s-1 kfEKcg" data-test="deposit-button">
+                                <button type="button" onclick="window.location.href = '/pa/deposit'"
+                                        class="bp3-button bp3-intent-exness_deposit DepositButton__ButtonStyled-sc-z1m61s-0 gAZUSj">
+                                    <span class="bp3-button-text">Nạp tiền</span>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="TradingPage_mainSection__hFtv-">
+                        <div class="TradingPage_chartPortfolioWrapper__iO58I">
+                            <div class="TradingPage_chartWrapper__weDDf">
+                                <div class="OHLCV__ChartLoadingScreenWrapper-sc-14fvp5e-0 etWzc"
+                                     style="position: relative;">
+                                    <div style="overflow: visible; height: 0px; width: 0px;">
+                                        <div id="tv_chart_container"
+                                             class="TradingViewChart__ChartContainer-sc-xqqp8c-0 hVEKzE">
+                                            <iframe id="tradingview_135a1" name="tradingview_135a1"
+                                                    src="/webtrading/trading_view/charting_library_v21.066_v1/vi-tv-chart.132c7060.html#symbol=EUR%2FUSD&amp;interval=1&amp;studiesAccess=%7B%22type%22%3A%22black%22%2C%22tools%22%3A%5B%7B%22name%22%3A%22Accumulation%2FDistribution%22%7D%2C%7B%22name%22%3A%22Chaikin%20Money%20Flow%22%7D%2C%7B%22name%22%3A%22Chaikin%20Oscillator%22%7D%2C%7B%22name%22%3A%22Ease%20Of%20Movement%22%7D%2C%7B%22name%22%3A%22Elder's%20Force%20Index%22%7D%2C%7B%22name%22%3A%22Klinger%20Oscillator%22%7D%2C%7B%22name%22%3A%22Money%20Flow%20Index%22%7D%2C%7B%22name%22%3A%22Net%20Volume%22%7D%2C%7B%22name%22%3A%22On%20Balance%20Volume%22%7D%2C%7B%22name%22%3A%22Price%20Volume%20Trend%22%7D%2C%7B%22name%22%3A%22Volume%22%7D%2C%7B%22name%22%3A%22Volume%20Oscillator%22%7D%2C%7B%22name%22%3A%22VWAP%22%7D%2C%7B%22name%22%3A%22Volume%20Profile%20Fixed%20Range%22%7D%2C%7B%22name%22%3A%22Volume%20Profile%20Visible%20Range%22%7D%2C%7B%22name%22%3A%22Zig%20Zag%22%7D%5D%7D&amp;widgetbar=%7B%22details%22%3Afalse%2C%22watchlist%22%3Afalse%2C%22watchlist_settings%22%3A%7B%22default_symbols%22%3A%5B%5D%7D%7D&amp;timeFrames=%5B%7B%22text%22%3A%225y%22%2C%22resolution%22%3A%221W%22%7D%2C%7B%22text%22%3A%221y%22%2C%22resolution%22%3A%221W%22%7D%2C%7B%22text%22%3A%226m%22%2C%22resolution%22%3A%22120%22%7D%2C%7B%22text%22%3A%223m%22%2C%22resolution%22%3A%2260%22%7D%2C%7B%22text%22%3A%221m%22%2C%22resolution%22%3A%2230%22%7D%2C%7B%22text%22%3A%225d%22%2C%22resolution%22%3A%225%22%7D%2C%7B%22text%22%3A%221d%22%2C%22resolution%22%3A%221%22%7D%5D&amp;locale=vi&amp;uid=tradingview_135a1&amp;clientId=0&amp;userId=0&amp;chartsStorageVer=1.0&amp;debug=false&amp;timezone=Etc%2FUTC&amp;theme=Dark"
+                                                    title="Financial Chart" frameborder="0" allowtransparency="true"
+                                                    scrolling="no" allowfullscreen=""
+                                                    style="display: block; width: 100%; height: 100%;" width="1156"
+                                                    height="147"></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="resize-triggers">
+                                        <div class="expand-trigger">
+                                            <!-- TradingView Widget BEGIN -->
+                                            <div class="tradingview-widget-container">
+                                                <div id="tradingview_797ab" style="height: calc(55vh)"></div>
+                                                <script type="text/javascript"
+                                                        src="https://s3.tradingview.com/tv.js"></script>
+                                                <script type="text/javascript">
+                                                    new TradingView.widget(
+                                                        {
+                                                            "autosize": true,
+                                                            "symbol": "BINANCE:BTCUSDT",
+                                                            "interval": "D",
+                                                            "timezone": "Etc/UTC",
+                                                            "theme": "dark",
+                                                            "style": "1",
+                                                            "locale": "vi_VN",
+                                                            "toolbar_bg": "#f1f3f6",
+                                                            "enable_publishing": false,
+                                                            "allow_symbol_change": true,
+                                                            "container_id": "tradingview_797ab"
+                                                        }
+                                                    );
+                                                </script>
+                                            </div>
+                                            <!-- TradingView Widget END -->
+                                        </div>
+                                        <div class="contract-trigger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Resizable_container__SgGSc ResizablePortfolio_container__9Ufw9"
+                                 data-test="resizable_portfolio" style="height: 300px; width: 100%;">
+                                <div class="Resizable_verticalResizer__Yd5dx" data-position="top" data-test="top-resizer">
+                                </div>
+                                <div class="ResizablePortfolio_portfolio__FqA6h Portfolio_container__rN7dw"
+                                     data-test="portfolio">
+                                    <div class="Portfolio_tabsContainer__INBK0">
+                                        <div class="Tabs_tabs__mElEu PortfolioTabs_tabs__x4rFO" data-test="portfolio_tabs">
+                                            <div class="Tab_tab__CDli8 Tab_active__hMxJQ" data-test="portfolio_tabs_open">
+                                                <div class="Tab_tabName__Agpjp">
+                                                    Mở<div class="Badge_badge__7VZ1- Tab_badge__TAmMy" data-test="tab_badge">
+                                                        0
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Tab_tab__CDli8" data-test="portfolio_tabs_pending">
+                                                <div class="Tab_tabName__Agpjp">
+                                                    Đang chờ<div class="Badge_badge__7VZ1- Tab_badge__TAmMy" data-test="tab_badge">
+                                                        0
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Tab_tab__CDli8" data-test="portfolio_tabs_closed">
+                                                <div class="Tab_tabName__Agpjp">Đã đóng</div>
+                                            </div>
+                                        </div>
+                                        <div class="Portfolio_buttons__iBW73">
+                                            <div class="PortfolioButton_button__M8Hzm PortfolioButton_active__X+BDj"
+                                                 data-test="portfolio_group_button">
+                                                <svg class="IconContainer_icon__PlN8z"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+                                                     viewBox="0 0 16 16" fill="currentColor">
+                                                    <path d="M1 3C0.447715 3 0 3.44772 0 4V6C0 6.55228 0.447715 7 1 7H2C2 5.89543 2.89543 5 4 5H10V4C10 3.44772 9.55228 3 9 3H1Z">
+                                                    </path>
+                                                    <path d="M6 10C6 9.44772 6.44772 9 7 9H15C15.5523 9 16 9.44772 16 10V12C16 12.5523 15.5523 13 15 13H7C6.44772 13 6 12.5523 6 12V10Z">
+                                                    </path>
+                                                    <path d="M4 6C3.44772 6 3 6.44772 3 7V9C3 9.55228 3.44772 10 4 10H5C5 8.89543 5.89543 8 7 8H13V7C13 6.44772 12.5523 6 12 6H4Z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                            <div class="PortfolioButton_button__M8Hzm" data-test="zoom_button">
+                                                <svg class="IconContainer_icon__PlN8z" xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+                                                     viewBox="0 0 16 16" fill="currentColor">
+                                                    <path d="M9.2928 6.7081C9.48033 6.89564 9.73469 7.00099 9.9999 7.00099L13.9999 7.00099C14.2651 7.00099 14.5195 6.89564 14.707 6.7081C14.8945 6.52056 14.9999 6.26621 14.9999 6.00099L14.9929 5.88399C14.9642 5.64074 14.8473 5.41647 14.6643 5.25371C14.4812 5.09095 14.2448 5.00102 13.9999 5.00099L12.4159 5.00099L15.0819 2.33299C15.2694 2.14546 15.3747 1.89116 15.3747 1.62599C15.3747 1.36083 15.2694 1.10652 15.0819 0.918993L14.9879 0.835992C14.7955 0.686741 14.5552 0.612823 14.3122 0.628104C14.0692 0.643385 13.8401 0.746816 13.6679 0.918993L10.9999 3.58899V2.00099C10.9999 1.73578 10.8945 1.48142 10.707 1.29389C10.5195 1.10635 10.2651 1.00099 9.9999 1.00099C9.73469 1.00099 9.48033 1.10635 9.2928 1.29389C9.10526 1.48142 8.9999 1.73578 8.9999 2.00099V6.00099C8.9999 6.26621 9.10526 6.52056 9.2928 6.7081Z">
+                                                    </path>
+                                                    <path d="M6.70689 9.29391C6.51936 9.10637 6.265 9.00102 5.99979 9.00102H1.99979C1.73457 9.00102 1.48022 9.10637 1.29268 9.29391C1.10514 9.48145 0.999786 9.7358 0.999786 10.001L1.00679 10.118C1.03544 10.3613 1.15238 10.5855 1.33541 10.7483C1.51845 10.9111 1.75485 11.001 1.99979 11.001H3.58379L0.917787 13.669C0.730316 13.8565 0.625 14.1109 0.625 14.376C0.625 14.6412 0.730316 14.8955 0.917787 15.083L1.01179 15.166C1.20419 15.3153 1.44444 15.3892 1.68747 15.3739C1.93049 15.3586 2.15959 15.2552 2.33179 15.083L4.99979 12.413V14.001C4.99979 14.2662 5.10514 14.5206 5.29268 14.7081C5.48022 14.8957 5.73457 15.001 5.99979 15.001C6.265 15.001 6.51936 14.8957 6.70689 14.7081C6.89443 14.5206 6.99979 14.2662 6.99979 14.001V10.6261C6.99979 10.3609 6.89443 9.48145 6.70689 9.29391Z">
+                                                    </path>
+                                                </svg>
+                                            </div><span class="bp3-popover-wrapper bp3-dark">
+                                                <span aria-haspopup="true" class="bp3-popover-target">
+                                                    <span class="">
+                                                        <div class="PortfolioButton_button__M8Hzm" data-test="more_button">
+                                                            <svg class="IconContainer_icon__PlN8z"
+                                                                 xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="16"
+                                                                 height="16" viewBox="0 0 16 16" fill="currentColor">
+                                                                <circle cx="8" cy="2" r="2"></circle>
+                                                                <circle cx="8" cy="8" r="2"></circle>
+                                                                <circle cx="8" cy="14" r="2"></circle>
+                                                            </svg>
+                                                        </div>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="PortfolioNoOrders_container__nsgeH" data-test="portfolio_no_orders">
+                                        <svg class="IconContainer_icon__PlN8z PortfolioNoOrders_icon__pj2GC"
+                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M4.477 8.281c-.145 0-.248 0-.246.206.009 1.056.007 2.112.001 3.168 0 .146.052.204.185.226.99.162 1.98.311 2.978.413.73.075 1.462.126 2.194.182 1.021.078 3.625.08 4.405.028.797-.053 1.595-.103 2.39-.182a47.32 47.32 0 0 0 3.136-.427c.187-.031.265-.087.263-.302-.012-1.009-.005-2.018-.006-3.027 0-.283 0-.283-.282-.283L4.477 8.28zm15.328-2.28c.92.001 1.688.52 2.032 1.362.119.29.159.598.16.908.004 1.52.004 3.04.001 4.561-.001.628-.27.967-.865 1.083-1.52.296-3.047.54-4.59.665-.173.014-.257.07-.25.27.014.39.007.78.003 1.17-.005.586-.355.942-.922.944-.46.002-.92-.02-1.378.006-.51.028-.937-.37-.942-.96-.004-.322-.008-.646.001-.968.005-.165-.047-.229-.213-.22-.675.032-.35.049-1.026.032-.229-.006-.458-.017-.687-.03-.127-.008-.177.047-.175.176.003.323.003.646 0 .969-.008.657-.368 1.026-1.006 1.03-.413.002-.827.001-1.24 0-.632-.004-.993-.372-.996-1.014-.002-.377-.01-.754.004-1.13.007-.194-.066-.261-.244-.275a36.485 36.485 0 0 1-3.158-.402 48.614 48.614 0 0 1-1.49-.276c-.511-.1-.808-.433-.811-.96-.01-1.602-.025-3.203.005-4.804.023-1.234.976-2.134 2.198-2.136C6.984 5.998 8.752 6 11.52 6c2.762 0 5.524-.002 8.285 0zM6.593 21.998c-1.321 0-2.328-.792-2.567-2.018a1.58 1.58 0 0 1-.024-.3C4 18.186 4 17.694 4 16.2c0-.212.012-.222.238-.184.562.095 1.124.188 1.692.245.177.018.204.11.203.253-.003 1.308-.002 1.617-.002 2.926 0 .437.116.547.576.547h10.636c.391-.002.524-.124.525-.488.003-.527.001-.054.001-.581 0-.8.005-1.6-.003-2.4-.002-.172.062-.237.24-.26.546-.072 1.09-.157 1.635-.24.245-.037.254-.034.254.203 0 1.451-.016 1.903.005 3.354.019 1.295-1.106 2.431-2.564 2.424-2.147-.01-8.71-.002-10.843-.003zm7.594-20.994c1.492.008 2.798 1.154 2.809 2.461.003.445-.004.89.004 1.334.003.149-.055.2-.225.199-.673-.006-1.345-.006-2.018 0-.161.001-.219-.05-.216-.188.006-.385.003-.77 0-1.154-.002-.36-.165-.503-.578-.503-1.297-.002-2.594-.002-3.891 0-.422 0-.578.142-.58.516 0 .373-.005.745.002 1.118.003.15-.042.216-.23.214-.68-.008-1.36-.005-2.04-.002-.125 0-.217-.017-.215-.152.01-.564-.047-1.132.044-1.693.17-1.047 1.15-1.92 2.34-2.115.335-.055.67-.033 1.006-.036.542-.004 1.084 0 1.627 0 .72 0 1.44-.003 2.161 0z">
+                                            </path>
+                                        </svg>
+                                        <div>Không có lệnh mở</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="TradingPage_orderPanelDesktopWrapper__ofBl4">
+                            <div data-test="right-panel" class="OrderPanelDesktop__Wrapper-sc-1hzpfl7-0 MuvEM">
+                                <div class="ToggleTabButton__Tabs-sc-grdzzt-0 MOgGl" data-test="toggle-tab-button">
+                                    <div data-style="tab" class="active" data-test="toggle-tab-left">Thị trường</div>
+                                    <div data-style="tab" class="" data-test="toggle-tab-right">Đang chờ</div>
+                                    <div data-style="divider"></div>
+                                    <div data-style="shuttle"></div>
+                                </div>
+                                <div class="OrderPanelDesktop__ButtonConatinerStyled-sc-1hzpfl7-1 eCCuTR">
+                                    <div class="order-panel-pending order-panel-pending_hidden">
+                                        <label data-test="input-pending-mobile">
+                                            <div class="PanelButton_panelButton__ZfM-1">
+                                                <div class="PanelButton_inputGroup__XIYh4">
+                                                    <div class="PanelButton_label__psdsm">Giá mở cửa</div>
+                                                    <div class="PanelButton_input__eEZAQ">
+                                                        <div class="InputButton_contentWrapper__3d4mF">
+                                                            <div class="InputEditableV2__Wrapper-sc-4mq0ks-0 ecPUFw">
+                                                                <div data-style="mob-container">
+                                                                    <input data-test="input-pending-mobile_input"
+                                                                           data-prop="input-pending-mobile_input" type="text"
+                                                                           pattern="[0-9\.,]*" placeholder="Chưa thiết lập"
+                                                                           value="">
+                                                                </div>
+                                                                <div data-style="incdec-desktop">
+                                                                    <div>
+                                                                        <div>+</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div>-</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="TooltipWithIcon__TooltipWithIconContainer-sc-1h0qxio-0 eqyoDL">
+                                                    <div data-tip="true" data-for="input-pending" currentitem="false">
+                                                        <svg class="IconContainer_icon__PlN8z"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="10"
+                                                             height="10" viewBox="0 0 20 20" fill="#8e97a1"
+                                                             data-style="inside-round">
+                                                            <path d="M 9.9765625 0.33007812 C 4.6450206 0.3426473 0.32970929 4.6684433 0.33007812 10 C 0.32972342 15.340697 4.6593029 19.670277 10 19.669922 C 15.340697 19.670277 19.670277 15.340697 19.669922 10 C 19.670277 4.6593029 15.340697 0.32972342 10 0.33007812 C 9.99219 0.33006867 9.984375 0.33006867 9.9765625 0.33007812 z M 9.9804688 3.1992188 C 11.462359 3.1992188 12.641915 3.5875481 13.517578 4.3652344 C 14.39324 5.136797 14.832031 6.0357027 14.832031 7.0644531 C 14.832031 7.6339399 14.67025 8.1753422 14.345703 8.6835938 C 14.02728 9.1918452 13.340354 9.8821511 12.287109 10.757812 C 11.742116 11.210953 11.402296 11.574052 11.267578 11.849609 C 11.138984 12.125168 11.081503 12.619751 11.09375 13.330078 L 8.75 13.330078 C 8.7438283 12.993285 8.7421875 12.788326 8.7421875 12.714844 C 8.7421875 11.955529 8.866123 11.329725 9.1171875 10.839844 C 9.368252 10.349963 9.8718075 9.7998514 10.625 9.1875 C 11.378192 8.5751485 11.827645 8.1742038 11.974609 7.984375 C 12.201179 7.6843228 12.314453 7.3534747 12.314453 6.9921875 C 12.314453 6.4900594 12.113137 6.062195 11.708984 5.7070312 C 11.310957 5.3457442 10.771506 5.1640625 10.091797 5.1640625 C 9.4365802 5.1640625 8.8881584 5.3491222 8.4472656 5.7226562 C 8.0063729 6.0961906 7.7043971 6.6662016 7.5390625 7.4316406 L 5.1679688 7.1386719 C 5.23533 6.0425631 5.7010379 5.1130954 6.5644531 4.3476562 C 7.4339927 3.582217 8.5720606 3.1992188 9.9804688 3.1992188 z M 8.75 14.220703 L 11.332031 14.220703 L 11.332031 16.800781 L 8.75 16.800781 L 8.75 14.220703 z ">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="__react_component_tooltip tfdecef34-b35a-4e68-a446-6ad1bdd0fac9 place-bottom type-dark"
+                                                         id="input-pending" data-id="tooltip">
+                                                        <style aria-hidden="true">
+                                                            .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9 {
+                                                                color: #fff;
+                                                                background: #222;
+                                                                border: 1px solid transparent;
+                                                            }
+
+                                                                .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-top {
+                                                                    margin-top: -10px;
+                                                                }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-top::before {
+                                                                        border-top: 8px solid transparent;
+                                                                    }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-top::after {
+                                                                        border-left: 8px solid transparent;
+                                                                        border-right: 8px solid transparent;
+                                                                        bottom: -6px;
+                                                                        left: 50%;
+                                                                        margin-left: -8px;
+                                                                        border-top-color: #222;
+                                                                        border-top-style: solid;
+                                                                        border-top-width: 6px;
+                                                                    }
+
+                                                                .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-bottom {
+                                                                    margin-top: 10px;
+                                                                }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-bottom::before {
+                                                                        border-bottom: 8px solid transparent;
+                                                                    }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-bottom::after {
+                                                                        border-left: 8px solid transparent;
+                                                                        border-right: 8px solid transparent;
+                                                                        top: -6px;
+                                                                        left: 50%;
+                                                                        margin-left: -8px;
+                                                                        border-bottom-color: #222;
+                                                                        border-bottom-style: solid;
+                                                                        border-bottom-width: 6px;
+                                                                    }
+
+                                                                .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-left {
+                                                                    margin-left: -10px;
+                                                                }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-left::before {
+                                                                        border-left: 8px solid transparent;
+                                                                    }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-left::after {
+                                                                        border-top: 5px solid transparent;
+                                                                        border-bottom: 5px solid transparent;
+                                                                        right: -6px;
+                                                                        top: 50%;
+                                                                        margin-top: -4px;
+                                                                        border-left-color: #222;
+                                                                        border-left-style: solid;
+                                                                        border-left-width: 6px;
+                                                                    }
+
+                                                                .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-right {
+                                                                    margin-left: 10px;
+                                                                }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-right::before {
+                                                                        border-right: 8px solid transparent;
+                                                                    }
+
+                                                                    .tfdecef34-b35a-4e68-a446-6ad1bdd0fac9.place-right::after {
+                                                                        border-top: 5px solid transparent;
+                                                                        border-bottom: 5px solid transparent;
+                                                                        left: -6px;
+                                                                        top: 50%;
+                                                                        margin-top: -4px;
+                                                                        border-right-color: #222;
+                                                                        border-right-style: solid;
+                                                                        border-right-width: 6px;
+                                                                    }
+                                                        </style>Lệnh của bạn sẽ tự động mở khi giá thị trường đạt mức giá do
+                                                        bạn chỉ định.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <div class="DropdownButton__Dropdown-sc-1jhl5br-0 eNXEVy">
+                                            <div class="DropdownButton__DropdownHeader-sc-1jhl5br-1 iyeaca">
+                                                Khối lượng theo
+                                                lô<div class="DropdownButton__RightContainer-sc-1jhl5br-3 eDfGjN">
+                                                    <div data-tip="true" data-for="dropdownVolume" currentitem="false">
+                                                        <svg class="IconContainer_icon__PlN8z"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="10"
+                                                             height="10" viewBox="0 0 20 20" fill="#8e97a1"
+                                                             data-style="inside-round">
+                                                            <path d="M 9.9765625 0.33007812 C 4.6450206 0.3426473 0.32970929 4.6684433 0.33007812 10 C 0.32972342 15.340697 4.6593029 19.670277 10 19.669922 C 15.340697 19.670277 19.670277 15.340697 19.669922 10 C 19.670277 4.6593029 15.340697 0.32972342 10 0.33007812 C 9.99219 0.33006867 9.984375 0.33006867 9.9765625 0.33007812 z M 9.9804688 3.1992188 C 11.462359 3.1992188 12.641915 3.5875481 13.517578 4.3652344 C 14.39324 5.136797 14.832031 6.0357027 14.832031 7.0644531 C 14.832031 7.6339399 14.67025 8.1753422 14.345703 8.6835938 C 14.02728 9.1918452 13.340354 9.8821511 12.287109 10.757812 C 11.742116 11.210953 11.402296 11.574052 11.267578 11.849609 C 11.138984 12.125168 11.081503 12.619751 11.09375 13.330078 L 8.75 13.330078 C 8.7438283 12.993285 8.7421875 12.788326 8.7421875 12.714844 C 8.7421875 11.955529 8.866123 11.329725 9.1171875 10.839844 C 9.368252 10.349963 9.8718075 9.7998514 10.625 9.1875 C 11.378192 8.5751485 11.827645 8.1742038 11.974609 7.984375 C 12.201179 7.6843228 12.314453 7.3534747 12.314453 6.9921875 C 12.314453 6.4900594 12.113137 6.062195 11.708984 5.7070312 C 11.310957 5.3457442 10.771506 5.1640625 10.091797 5.1640625 C 9.4365802 5.1640625 8.8881584 5.3491222 8.4472656 5.7226562 C 8.0063729 6.0961906 7.7043971 6.6662016 7.5390625 7.4316406 L 5.1679688 7.1386719 C 5.23533 6.0425631 5.7010379 5.1130954 6.5644531 4.3476562 C 7.4339927 3.582217 8.5720606 3.1992188 9.9804688 3.1992188 z M 8.75 14.220703 L 11.332031 14.220703 L 11.332031 16.800781 L 8.75 16.800781 L 8.75 14.220703 z ">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="__react_component_tooltip te4b837fb-f50d-4737-8b7a-639a72fe81c6 place-bottom type-dark"
+                                                         id="dropdownVolume" data-id="tooltip">
+                                                        <style aria-hidden="true">
+                                                            .te4b837fb-f50d-4737-8b7a-639a72fe81c6 {
+                                                                color: #fff;
+                                                                background: #222;
+                                                                border: 1px solid transparent;
+                                                            }
+
+                                                                .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-top {
+                                                                    margin-top: -10px;
+                                                                }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-top::before {
+                                                                        border-top: 8px solid transparent;
+                                                                    }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-top::after {
+                                                                        border-left: 8px solid transparent;
+                                                                        border-right: 8px solid transparent;
+                                                                        bottom: -6px;
+                                                                        left: 50%;
+                                                                        margin-left: -8px;
+                                                                        border-top-color: #222;
+                                                                        border-top-style: solid;
+                                                                        border-top-width: 6px;
+                                                                    }
+
+                                                                .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-bottom {
+                                                                    margin-top: 10px;
+                                                                }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-bottom::before {
+                                                                        border-bottom: 8px solid transparent;
+                                                                    }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-bottom::after {
+                                                                        border-left: 8px solid transparent;
+                                                                        border-right: 8px solid transparent;
+                                                                        top: -6px;
+                                                                        left: 50%;
+                                                                        margin-left: -8px;
+                                                                        border-bottom-color: #222;
+                                                                        border-bottom-style: solid;
+                                                                        border-bottom-width: 6px;
+                                                                    }
+
+                                                                .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-left {
+                                                                    margin-left: -10px;
+                                                                }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-left::before {
+                                                                        border-left: 8px solid transparent;
+                                                                    }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-left::after {
+                                                                        border-top: 5px solid transparent;
+                                                                        border-bottom: 5px solid transparent;
+                                                                        right: -6px;
+                                                                        top: 50%;
+                                                                        margin-top: -4px;
+                                                                        border-left-color: #222;
+                                                                        border-left-style: solid;
+                                                                        border-left-width: 6px;
+                                                                    }
+
+                                                                .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-right {
+                                                                    margin-left: 10px;
+                                                                }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-right::before {
+                                                                        border-right: 8px solid transparent;
+                                                                    }
+
+                                                                    .te4b837fb-f50d-4737-8b7a-639a72fe81c6.place-right::after {
+                                                                        border-top: 5px solid transparent;
+                                                                        border-bottom: 5px solid transparent;
+                                                                        left: -6px;
+                                                                        top: 50%;
+                                                                        margin-top: -4px;
+                                                                        border-right-color: #222;
+                                                                        border-right-style: solid;
+                                                                        border-right-width: 6px;
+                                                                    }
+                                                        </style>Quy mô giao dịch của bạn là số lượng tài sản tiền tệ mà bạn
+                                                        dự định mua hoặc bán. Số lượng tài sản này được tính theo lô (lot);
+                                                        một lô tiêu chuẩn tương đương với 100,000 đơn vị của đồng tiền cơ
+                                                        sở. Giá được xác định theo đơn vị của đồng tiền định giá. Khối lượng
+                                                        giao dịch tối thiểu trên nền tảng của chúng tôi là 0.01 lô (lot).
+                                                    </div>
+                                                    <div class="DropdownButton__Arrow-sc-1jhl5br-4 ccWanV"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label data-test="volume-input">
+                                            <div class="PanelButton_panelButton__ZfM-1">
+                                                <div class="PanelButton_inputGroup__XIYh4">
+                                                    <div class="PanelButton_input__eEZAQ">
+                                                        <div class="InputButton_contentWrapper__3d4mF">
+                                                            <div class="InputEditableV2__Wrapper-sc-4mq0ks-0 eNLNBi">
+                                                                <div data-style="mob-container">
+                                                                    <input data-test="volume-input_input"
+                                                                           data-prop="volume-input_input" type="text"
+                                                                           pattern="[0-9\.,]*" placeholder="Chưa thiết lập"
+                                                                           value="0.01">
+                                                                    <div data-style="input-tipText">lô</div>
+                                                                </div>
+                                                                <div data-style="incdec-desktop">
+                                                                    <div>
+                                                                        <div>+</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div>-</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="OrderPanelDesktop__ButtonConatinerStyled-sc-1hzpfl7-1 eCCuTR">
+                                    <div class="Toggle_toggleButton__Thl++">
+                                        <div class="Toggle_toggleContainer__gJmVF">
+                                            <div class="Toggle_toggle__lf-Vn"><span class="Toggle_pin__8n2pc"></span></div>
+                                            <div class="Toggle_text__eZuJC">Tự động đóng</div>
+                                        </div>
+                                        <div class="Toggle_tooltip__fLtDL">
+                                            <div data-tip="true" data-for="AutoCloseTooltip" currentitem="false">
+                                                <svg class="IconContainer_icon__PlN8z" xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10"
+                                                     viewBox="0 0 20 20" fill="#8e97a1" data-style="inside-round">
+                                                    <path d="M 9.9765625 0.33007812 C 4.6450206 0.3426473 0.32970929 4.6684433 0.33007812 10 C 0.32972342 15.340697 4.6593029 19.670277 10 19.669922 C 15.340697 19.670277 19.670277 15.340697 19.669922 10 C 19.670277 4.6593029 15.340697 0.32972342 10 0.33007812 C 9.99219 0.33006867 9.984375 0.33006867 9.9765625 0.33007812 z M 9.9804688 3.1992188 C 11.462359 3.1992188 12.641915 3.5875481 13.517578 4.3652344 C 14.39324 5.136797 14.832031 6.0357027 14.832031 7.0644531 C 14.832031 7.6339399 14.67025 8.1753422 14.345703 8.6835938 C 14.02728 9.1918452 13.340354 9.8821511 12.287109 10.757812 C 11.742116 11.210953 11.402296 11.574052 11.267578 11.849609 C 11.138984 12.125168 11.081503 12.619751 11.09375 13.330078 L 8.75 13.330078 C 8.7438283 12.993285 8.7421875 12.788326 8.7421875 12.714844 C 8.7421875 11.955529 8.866123 11.329725 9.1171875 10.839844 C 9.368252 10.349963 9.8718075 9.7998514 10.625 9.1875 C 11.378192 8.5751485 11.827645 8.1742038 11.974609 7.984375 C 12.201179 7.6843228 12.314453 7.3534747 12.314453 6.9921875 C 12.314453 6.4900594 12.113137 6.062195 11.708984 5.7070312 C 11.310957 5.3457442 10.771506 5.1640625 10.091797 5.1640625 C 9.4365802 5.1640625 8.8881584 5.3491222 8.4472656 5.7226562 C 8.0063729 6.0961906 7.7043971 6.6662016 7.5390625 7.4316406 L 5.1679688 7.1386719 C 5.23533 6.0425631 5.7010379 5.1130954 6.5644531 4.3476562 C 7.4339927 3.582217 8.5720606 3.1992188 9.9804688 3.1992188 z M 8.75 14.220703 L 11.332031 14.220703 L 11.332031 16.800781 L 8.75 16.800781 L 8.75 14.220703 z ">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                            <div class="__react_component_tooltip tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499 place-bottom type-dark"
+                                                 id="AutoCloseTooltip" data-id="tooltip">
+                                                <style aria-hidden="true">
+                                                    .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499 {
+                                                        color: #fff;
+                                                        background: #222;
+                                                        border: 1px solid transparent;
+                                                    }
+
+                                                        .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-top {
+                                                            margin-top: -10px;
+                                                        }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-top::before {
+                                                                border-top: 8px solid transparent;
+                                                            }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-top::after {
+                                                                border-left: 8px solid transparent;
+                                                                border-right: 8px solid transparent;
+                                                                bottom: -6px;
+                                                                left: 50%;
+                                                                margin-left: -8px;
+                                                                border-top-color: #222;
+                                                                border-top-style: solid;
+                                                                border-top-width: 6px;
+                                                            }
+
+                                                        .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-bottom {
+                                                            margin-top: 10px;
+                                                        }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-bottom::before {
+                                                                border-bottom: 8px solid transparent;
+                                                            }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-bottom::after {
+                                                                border-left: 8px solid transparent;
+                                                                border-right: 8px solid transparent;
+                                                                top: -6px;
+                                                                left: 50%;
+                                                                margin-left: -8px;
+                                                                border-bottom-color: #222;
+                                                                border-bottom-style: solid;
+                                                                border-bottom-width: 6px;
+                                                            }
+
+                                                        .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-left {
+                                                            margin-left: -10px;
+                                                        }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-left::before {
+                                                                border-left: 8px solid transparent;
+                                                            }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-left::after {
+                                                                border-top: 5px solid transparent;
+                                                                border-bottom: 5px solid transparent;
+                                                                right: -6px;
+                                                                top: 50%;
+                                                                margin-top: -4px;
+                                                                border-left-color: #222;
+                                                                border-left-style: solid;
+                                                                border-left-width: 6px;
+                                                            }
+
+                                                        .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-right {
+                                                            margin-left: 10px;
+                                                        }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-right::before {
+                                                                border-right: 8px solid transparent;
+                                                            }
+
+                                                            .tdd3c0a24-8c3d-4fc9-9177-0d0b735a6499.place-right::after {
+                                                                border-top: 5px solid transparent;
+                                                                border-bottom: 5px solid transparent;
+                                                                left: -6px;
+                                                                top: 50%;
+                                                                margin-top: -4px;
+                                                                border-right-color: #222;
+                                                                border-right-style: solid;
+                                                                border-right-width: 6px;
+                                                            }
+                                                </style>Tự động đóng cho phép lệnh của bạn tự động đóng khi giá thị trường
+                                                đạt đến mức Chốt lời hoặc Cắt lỗ do bạn đặt ra.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="OrderPanelDesktop__OrderButtonsWrapper-sc-1hzpfl7-2 kWiEXc">
+                                    <div>
+                                        <div class="">
+                                            <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                <span class="bp3-popover-wrapper">
+                                                    <span aria-haspopup="true"
+                                                          class="bp3-popover-target">
+                                                        <label data-test="buy-button"
+                                                               data-role="buy-button">
+                                                            <div class="PanelButton_panelButton__ZfM-1 OrderButton_panelButton__cNUqt OrderButton_buy__-ZJaM PanelButton_isOrderButton__BJO4z PanelButton_buy__ISieH">
+                                                                <div class="PanelButton_inputGroup__XIYh4 PanelButton_isOrderButton__BJO4z">
+                                                                    <div class="PanelButton_label__psdsm OrderButton_label__XlEWI OrderButton_buy__-ZJaM">
+                                                                        MUA
+                                                                    </div>
+                                                                    <div class="PanelButton_input__eEZAQ">
+                                                                        <div class="OrderButton_orderButtonContent__FF8-c">
+                                                                            <div class="OrderButton_price__jZqhi">
+                                                                                <span class="OrderButton_firstPip__R5Qqn"
+                                                                                      data-test="first-pip">1.10</span><span class="OrderButton_majorPip__NkVW4"
+                                                                                                                             data-test="major-pip">60</span><span class="OrderButton_minorPip__7qscR"
+                                                                                                                                                                  data-test="minor-pip">3</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="">
+                                            <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                                <span class="bp3-popover-wrapper">
+                                                    <span aria-haspopup="true"
+                                                          class="bp3-popover-target">
+                                                        <label data-test="sell-button"
+                                                               data-role="sell-button">
+                                                            <div class="PanelButton_panelButton__ZfM-1 OrderButton_panelButton__cNUqt OrderButton_sell__t9TKt PanelButton_isOrderButton__BJO4z PanelButton_sell__pVhHJ">
+                                                                <div class="PanelButton_inputGroup__XIYh4 PanelButton_isOrderButton__BJO4z">
+                                                                    <div class="PanelButton_label__psdsm OrderButton_label__XlEWI OrderButton_sell__t9TKt">
+                                                                        BÁN
+                                                                    </div>
+                                                                    <div class="PanelButton_input__eEZAQ">
+                                                                        <div class="OrderButton_orderButtonContent__FF8-c">
+                                                                            <div class="OrderButton_price__jZqhi">
+                                                                                <span class="OrderButton_firstPip__R5Qqn"
+                                                                                      data-test="first-pip">1.10</span><span class="OrderButton_majorPip__NkVW4"
+                                                                                                                             data-test="major-pip">59</span><span class="OrderButton_minorPip__7qscR"
+                                                                                                                                                                  data-test="minor-pip">3</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-style="spread" data-auto="spread" data-role="spread">
+                                        <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                            <span class="bp3-popover-wrapper">
+                                                <span aria-haspopup="true"
+                                                      class="bp3-popover-target">
+                                                    <div class="" tabindex="0">1.0</div>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div data-tip="true" data-for="standardStatusTip" class="Sentiments_container__l-250">
+                                        <div tabindex="-1"
+                                             class="Tooltip_tooltip__DKFUF with-content Sentiments_tooltip__Bn2m-">
+                                            <span class="bp3-popover-wrapper">
+                                                <span aria-haspopup="true"
+                                                      class="bp3-popover-target">
+                                                    <div class="Sentiments_lineWrapper__AnJse" tabindex="0">
+                                                        <div class="Sentiments_percent__sos0C Sentiments_sell__tVGw2">
+                                                            56%
+                                                        </div>
+                                                        <div class="Sentiments_defaultLine__9x1IG Sentiments_sell__tVGw2">
+                                                        </div>
+                                                        <div class="Sentiments_line__StDuQ" style="width: 56%;"></div>
+                                                        <div class="Sentiments_percent__sos0C Sentiments_buy__8dVqs">
+                                                            44%
+                                                        </div>
+                                                        <div class="Sentiments_line__StDuQ Sentiments_buy__8dVqs"
+                                                             style="width: 44%;"></div>
+                                                        <div class="Sentiments_defaultLine__9x1IG Sentiments_buy__8dVqs">
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="TradingPage_slowInternetWarningWrapper__AjUGT"></div>
+                        </div>
+                        <div class="TradingPage_popupPortalContainer__bijDq" id="popupPortalContainer"></div>
+                    </div>
+                    <div class="DesktopBottomPanel_container__gYG96" id="footerContainer">
+                        <div class="DesktopBottomPanel_infoContainer__yLiue">
+                            <div class="DesktopBottomPanel_infoWrapper__2RZH9">
+                                <div class="DesktopBottomPanel_infoWithWidth__tpNiy">
+                                    <div class="DesktopBottomPanel_info__vmmZ4">
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="equity">
+                                            <div class="FooterValue_valueLabel__VUgfG">Tài sản:</div>
+                                            <div class="FooterValue_value__FpoZZ">10,000.00 USD</div>
+                                        </div>
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="free-margin">
+                                            <div class="FooterValue_valueLabel__VUgfG">Tiền Ký Quỹ Khả Dụng:</div>
+                                            <div class="FooterValue_value__FpoZZ">10,000.00 USD</div>
+                                        </div>
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="balance">
+                                            <div class="FooterValue_valueLabel__VUgfG">Số dư:</div>
+                                            <div class="FooterValue_value__FpoZZ">10,000.00 USD</div>
+                                        </div>
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="margin">
+                                            <div class="FooterValue_valueLabel__VUgfG">Ký quỹ:</div>
+                                            <div class="FooterValue_value__FpoZZ">0.00 USD</div>
+                                        </div>
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="margin-level">
+                                            <div class="FooterValue_valueLabel__VUgfG">Mức ký quỹ:</div>
+                                            <div class="FooterValue_value__FpoZZ">-</div>
+                                        </div>
+                                        <div class="FooterValue_wrapper__C+hLy" data-test="leverage">
+                                            <div class="FooterValue_valueLabel__VUgfG">Đòn bẩy:</div>
+                                            <div class="FooterValue_value__FpoZZ">1:200</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-test="footer-connection"
+                             class="FooterConnection_container__zhbUp DesktopBottomPanel_connection__L8wrR undefined">
+                            <div tabindex="-1" class="Tooltip_tooltip__DKFUF with-content">
+                                <span class="bp3-popover-wrapper">
+                                    <span aria-haspopup="true" class="bp3-popover-target">
+                                        <div class="FooterConnection_icon__aqYhn" tabindex="0">
+                                            <div>
+                                                <svg fill="var(--c-success)" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 16 16" class="IconWifi__SVGStyled-sc-exoaze-0 iHtfKr">
+                                                    <path d="M 2 4.5 L 2 6.5 C 6.142 6.5 9.5 9.858 9.5 14 L 11.5 14 C 11.5 8.753 7.247 4.5 2 4.5 z M 2 8.5 L 2 10.5 C 3.933 10.5 5.5 12.067 5.5 14 L 7.5 14 C 7.5 10.962 5.038 8.5 2 8.5 z M 2 12.5 C 1.172 12.5 0.5 13.172 0.5 14 C 0.5 14.828 1.172 15.5 2 15.5 C 2.828 15.5 3.5 14.828 3.5 14 C 3.5 13.172 2.828 12.5 2 12.5 z">
+                                                    </path>
+                                                    <path d="m 2,0.5 c 7.456,0 13.5,6.044 13.5,13.5 h -2 C 13.5,7.649 8.351,2.5 2,2.5 Z"
+                                                          style=""></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bp3-portal"><div aria-live="polite" class="bp3-overlay bp3-overlay-open account-popup"><div tabindex="0" class="bp3-overlay-start-focus-trap bp3-popover-appear-done bp3-popover-enter-done"></div><div class="bp3-transition-container bp3-popover-appear-done bp3-popover-enter-done" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(944px, 73px, 0px);"><div class="bp3-popover bp3-dark bp3-minimal" style="transform-origin: center top;"><div class="bp3-popover-content"><div class="AppsDropDown__AppsButtonContainer-sc-12ur4m6-0 bKWPDv"><div class="ApplicationsButtons_container__XZSQv"><a data-test="menu-item-traders-area" href="/pa/" target="_blank" class="MenuItem_item__uCzIN MenuItem_itemM__wZWnG ApplicationsButtons_button__AWA5l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="IconDashboard__SVGStyled-sc-1rdpg6n-0 iuMBbQ"><path d="M13,15 L13,15 C13,14.448 12.553,14 12,14 L8,14 L8,16 L12,16 C12.553,16 13,15.552 13,15 L13,15 Z M16,12 L16,12 C16,11.448 15.553,11 15,11 L8,11 L8,13 L15,13 C15.553,13 16,12.552 16,12 L16,12 Z M14,9 L14,9 C14,8.448 13.553,8 13,8 L8,8 L8,10 L13,10 C13.553,10 14,9.552 14,9 L14,9 Z M2,14 L4,14 L4,10 L2,10 L2,14 Z M6,9 L6,15 C6,15.552 5.553,16 5,16 L1,16 C0.447,16 0,15.552 0,15 L0,9 C0,8.448 0.447,8 1,8 L5,8 C5.553,8 6,8.448 6,9 L6,9 Z M2,4 L4,4 L4,2 L2,2 L2,4 Z M6,1 L6,5 C6,5.552 5.553,6 5,6 L1,6 C0.447,6 0,5.552 0,5 L0,1 C0,0.448 0.447,0 1,0 L5,0 C5.553,0 6,0.448 6,1 L6,1 Z M10,4 L14,4 L14,2 L10,2 L10,4 Z M16,1 L16,5 C16,5.552 15.553,6 15,6 L9,6 C8.447,6 8,5.552 8,5 L8,1 C8,0.448 8.447,0 9,0 L15,0 C15.553,0 16,0.448 16,1 L16,1 Z"></path></svg><span class="MenuItem_title__rEQFM ApplicationsButtons_title__lZ8pr">Khu vực của nhà giao dịch</span></a><a data-test="menu-item-terminal" href="https://my.extrading.pro/webtrading/" target="_blank" class="MenuItem_item__uCzIN MenuItem_itemM__wZWnG ApplicationsButtons_button__AWA5l MenuItem_active__-pHv2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="IconCandles__SVGStyled-sc-mgu5fn-0 edbfes"><path d="M3 0C2.44772 0 2 0.447715 2 1V3C0.895431 3 0 3.89543 0 5V11C0 12.1046 0.895431 13 2 13V15C2 15.5523 2.44772 16 3 16C3.55228 16 4 15.5523 4 15V13C5.10457 13 6 12.1046 6 11V5C6 3.89543 5.10457 3 4 3V1C4 0.447715 3.55228 0 3 0Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C10 0.447715 10.4477 0 11 0C11.5523 0 12 0.447715 12 1V3C13.1046 3 14 3.89543 14 5V8C14 9.10457 13.1046 10 12 10V12C12 12.5523 11.5523 13 11 13C10.4477 13 10 12.5523 10 12V10C8.89543 10 8 9.10457 8 8V5C8 3.89543 8.89543 3 10 3V1ZM10 8V5H12V8H10Z"></path></svg><span class="MenuItem_title__rEQFM ApplicationsButtons_title__lZ8pr">Thiết bị đầu cuối Exness</span></a><a data-test="menu-item-website" href="https://www.extrading.pro/vi" target="_blank" class="MenuItem_item__uCzIN MenuItem_itemM__wZWnG ApplicationsButtons_button__AWA5l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="IconWebsite__SVGStyled-sc-1u6p9ve-0 bbcJMP"><path d="M2 0C0.895431 0 0 0.89543 0 2V22C0 23.1046 0.89543 24 2 24H22C23.1046 24 24 23.1046 24 22V2C24 0.895431 23.1046 0 22 0H2ZM22.5279 7.5L16.9349 11.8569L23.0855 16.288H19.9749L15.5277 12.9065L13.8229 14.2999C13.0703 14.9135 10.9535 16.5202 8.60817 16.4998C7.1841 16.4922 5.83966 15.7397 5.20821 14.9317L3.46718 16.288H0.5896L4.35114 13.4174C4.22498 13.1202 4.11679 12.4791 4.11679 11.9685C4.11679 9.49708 5.83057 7.5 9.18628 7.5H14.6709L5.60495 14.6156C6.21833 15.3125 7.31732 15.4928 8.0931 15.4928C10.0597 15.4928 11.3871 14.3372 12.3344 13.5103L14.1926 11.894L11.7931 10.0639H14.4335L15.5458 10.8162L19.7494 7.5H22.5279ZM4.64941 12.1355C4.64941 12.4421 4.70355 12.9623 4.7576 13.1015C4.7576 13.1015 8.39985 10.3796 9.16866 9.79426C9.93747 9.20898 10.2871 9.05127 10.2871 9.05127H8.73567C5.77698 9.05127 4.64941 10.482 4.64941 12.1355Z"></path>  </svg><span class="MenuItem_title__rEQFM ApplicationsButtons_title__lZ8pr">Trang web công cộng</span></a><a data-test="menu-item-partnership" href="https://my.exnesstrade.pro/?lang=vi" target="_self" class="MenuItem_item__uCzIN MenuItem_itemM__wZWnG ApplicationsButtons_button__AWA5l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="IconPartnership__SVGStyled-sc-dczbsh-0 bXDOtU"><path d="M7.333,11.173 C9.151,11.713 10,12.495 10,13.999 L10,13.999 L10,15 C10,15.478 9.662,16 9,16 L9,16 L1,16 C0.338,16 5.68434189e-14,15 5.68434189e-14,15 L5.68434189e-14,15 L5.68434189e-14,13.999 C5.68434189e-14,12.492 0.844,11.711 2.666,11.173 L2.666,11.173 L5,13.025 Z M13.3325,7.173 C15.1505,7.713 15.9995,8.495 15.9995,9.999 L15.9995,9.999 L15.9995,11 C15.9995,11.478 15.6615,12 14.9995,12 L14.9995,12 L10.4215,12 C9.7405,10.987 8.5805,10.5 7.6175,10.214 L7.6175,10.214 C8.0025,9.419 8.2215,8.475 8.2215,7.557 C8.2215,7.479 8.2055,7.406 8.2005,7.329 C8.3515,7.276 8.4995,7.222 8.6655,7.173 L8.6655,7.173 L10.9995,9.025 Z M4.9995,5 C6.2265,5 7.2215,6.145 7.2215,7.557 C7.2215,9.32 6.2265,11.173 4.9995,11.173 C3.7715,11.173 2.7775,9.276 2.7775,7.557 C2.7775,6.145 3.7715,5 4.9995,5 Z M10.9995,1 C12.2275,1 13.2225,2.145 13.2225,3.557 C13.2225,5.321 12.2275,7.173 10.9995,7.173 C9.7715,7.173 8.7775,5.276 8.7775,3.557 C8.7775,2.145 9.7715,1 10.9995,1 Z"></path></svg><span class="MenuItem_title__rEQFM ApplicationsButtons_title__lZ8pr">Quan hệ đối tác</span></a></div></div></div></div></div><div tabindex="0" class="bp3-overlay-end-focus-trap bp3-popover-appear-done bp3-popover-enter-done"></div></div></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"
+                integrity="sha512-chZc2Mx8B1GzGSNMfJRH63jW7uYZXzX0a/UlWRrTvl4kxxYqUHNMtyTTA5IDQ7gTl4ATLoXlZthsialW3muS0A=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            $(document).ready(function () {
+                $('.WatchList_watchlistItem__C7uuQ').click(function () {
+                    var symbol = $(this).data('symbol');
+                    if (symbol.indexOf(':') > -1) {
+                        $('.asset-tab-symbol').html(symbol.split(':')[1]);
+                    }
+                    else {
+                        $('.asset-tab-symbol').html(symbol);
+                    }
+                    new TradingView.widget(
+                        {
+                            "autosize": true,
+                            "symbol": symbol,
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "dark",
+                            "style": "1",
+                            "locale": "vi_VN",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_797ab"
+                        }
+                    );
+                });
+            });
+        </script>
+    </body>
+
+</html>

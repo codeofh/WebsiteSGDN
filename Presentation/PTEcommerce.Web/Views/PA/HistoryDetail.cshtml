@@ -1,0 +1,100 @@
+﻿@model List<marketplace.HistoryTransferExtend>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="card mb-3 box-shadow-none border-custom">
+            <div class="card-body py-3 px-3 fs-15 row">
+                <div class="col d-flex align-items-center">
+                    <i class="bx bx-down-arrow-circle me-3" style="font-size: 30px"></i>
+                    <div>
+
+                        @if (item.Type == 1)
+                        {
+                            <span>Nạp tiền</span>
+                        }
+                        else if (item.Type == 2)
+                        {
+                            <span>Rút tiền</span>
+                        }
+                        else if (item.Type == 3)
+                        {
+                            <span>@item.Note</span>
+                        }
+                        else if (item.Type == 4)
+                        {
+                            <span>Khuyến mãi</span>
+                        }
+                        else if (item.Type == 5)
+                        {
+                            <span>Lợi nhuận</span>
+                        }
+                        else if (item.Type == 6)
+                        {
+                            <span>Hoa hồng</span>
+                        }
+                        else
+                        {
+                            <span>Khác</span>
+                        }
+                        <br />
+                        <span class="small text-secondary">@item.CreatedDate.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                </div>
+                <div class="col align-items-center d-flex float-end">
+                    @if (item.Type == 1)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Nạp thành công</span>
+                    }
+                    else if (item.Type == 2)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Rút thành công</span>
+                    }
+                    else if (item.Type == 3)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Mua gói thành công</span>
+                    }
+                    else if (item.Type == 4)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Khuyến mãi đầu tư</span>
+                    }
+                    else if (item.Type == 5)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Lợi nhuận</span>
+                    }
+                    else if (item.Type == 6)
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Hoa hồng</span>
+                    }
+                    else
+                    {
+                        <span class="text-success"><i class="mdi mdi-circle text-success"></i> Hoàn tất</span>
+                    }
+                </div>
+                <div class="col-auto align-items-center d-flex">
+                    @if (item.AmountBefore > item.AmountAfter)
+                    {
+                        <span>- @PTEcommerce.Business.Helper.NumberFormat(item.AmountModified) USD</span>
+                    }
+                    else
+                    {
+                        <span>+ @PTEcommerce.Business.Helper.NumberFormat(item.AmountModified) USD</span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card mb-3 box-shadow-none border-custom">
+        <div class="card-body py-3 px-3 fs-15 text-center">
+            <p class="m-0">Bạn chưa phát sinh giao dịch nào!</p>
+        </div>
+    </div>
+
+}

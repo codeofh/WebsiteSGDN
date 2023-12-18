@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <style>
+        .title-card {
+            background-color: #f4f5f6;
+            border-radius: 5px;
+            color: #363d42;
+            font-weight: 500
+        }
+        .box-shadow-none {
+            box-shadow: none;
+        }
+        .border-custom {
+            border: 1px solid #e3e4e5;
+            border-radius: 6px;
+        }
+    </style>
+}
+<div class="card w-100">
+    <div class="card-body">
+        <h2 class="">Lịch sử giao dịch</h2>
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <select class="form-select" id="sltDayHistory">
+                    <option value="30" data-month="@(DateTime.Now.AddDays(-30).Month)" data-year="@(DateTime.Now.AddDays(-30).Year)">30 ngày trước</option>
+                    <option value="3" data-month="@(DateTime.Now.AddDays(-3).Month)" data-year="@(DateTime.Now.AddDays(-3).Year)">3 ngày trước</option>
+                    <option value="7" data-month="@(DateTime.Now.AddDays(-7).Month)" data-year="@(DateTime.Now.AddDays(-7).Year)">7 ngày trước</option>
+                    <option value="180" data-month="@(DateTime.Now.AddDays(-180).Month)" data-year="@(DateTime.Now.AddDays(-180).Year)">3 tháng trước</option>
+                </select>
+            </div>
+        </div>
+        <div class="card mt-3 mb-2 box-shadow-none">
+            <div class="card-body py-2 px-3 fs-15 title-card">
+                Tháng <span id="sltMonth">@DateTime.Now.Month</span>, năm <span id="sltYear">@DateTime.Now.Year</span>
+            </div>
+        </div>
+        <div id="history-customer">
+            
+        </div>
+    </div>
+</div>
+

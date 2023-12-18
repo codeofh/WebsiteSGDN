@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "DepositDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal minRecharge = decimal.Parse(ViewBag.MinRecharge);
+    decimal maxRecharge = decimal.Parse(ViewBag.MaxRecharge);
+    decimal usd2vnd = decimal.Parse(ViewBag.USD2VND);
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+}
+
+<div class="card w-100">
+    <div class="card-body">
+        <h2 class="mb-4">Nạp tiền</h2>
+        <a href="/pa/deposit" class="text-primary fs-15 mt-3">
+            Xem tất cả các phương thức thanh toán
+        </a>
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <div class="form-group mb-3">
+                    <label class="form-label">Phương thức thanh toán</label>
+                    <select class="form-select">
+                        <option value="Internet Banking">Internet Banking</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label">Số tiền</label>
+                    <div class="input-group input-group-lg">
+                        <input type="number" id="txtRechargeAmount" class="form-control fs-24 fw-bolder" min="@minRecharge" max="@maxRecharge" placeholder="0.00" />
+                        <span class="input-group-text" id="inputGroup-sizing-default">VND</span>
+                    </div>
+                    <small class="text-primary">@PTEcommerce.Business.Helper.NumberFormat(minRecharge * usd2vnd) - @PTEcommerce.Business.Helper.NumberFormat(maxRecharge * usd2vnd) VND</small>
+                </div>
+                <input type="number" class="form-control" id="txtConvertUSD" value="@usd2vnd" style="display: none" />
+                <div class="form-group mb-3">
+                    <div class="card" style="box-shadow: none; background-color: #F4F5F6; border-radius: 0">
+                        <div class="card-body d-flex align-baseline pb-2 px-3">
+                            <div class="d-flex" style="margin-top: 15px">Số tiền cần nạp</div>
+                            <div class="d-flex" style="flex-grow: 1; margin: 30px 8px; height: 1px; border-bottom: 1px dotted #bcbec0 "></div>
+                            <div class="d-flex" style="align-items: baseline"><span style="font-size: 28px; font-weight: 600; margin-right: 8px" id="txtShowAmountRecharge"></span><span style="font-size: 25px; font-weight: 600">USD</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-3" id="notification">
+
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btnRechargeAmount" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3>Thông tin chuyển khoản</h3>
+                <h4>Ngân hàng: @ViewBag.BankName</h4>
+                <h4>Chủ tài khoản: @ViewBag.BankAccount</h4>
+                <h4>Số tài khoản: @ViewBag.BankNumber</h4>
+                <h4>Nội dung: @ViewBag.BankSyntax @mems.AccID</h4>
+            </div>
+        </div>
+    </div>
+</div>

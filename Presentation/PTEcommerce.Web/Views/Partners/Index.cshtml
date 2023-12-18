@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout_Partner.cshtml";
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var customer = (marketplace.AccountCustomer)ViewBag.Account;
+}
+<style>
+    .card {
+        border-top: 3px solid #3f1f84;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+
+    .tableCustomer > tbody > tr > td {
+        padding: 20px;
+    }
+
+    .tableCustomer .card {
+        border-radius: 0.5rem;
+        border: none !important;
+        margin-bottom: 0;
+    }
+
+    .tableCustomer .card-body {
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 20px;
+        border-top-left-radius: 0.5rem;
+        border: 1px solid #ffe057;
+        border-top-right-radius: 0.5rem;
+        background-color: #ffe057;
+    }
+
+    .tableCustomer .card-footer {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        font-size: 20px;
+        padding: 0.5rem;
+    }
+
+    .title-card-cus {
+        font-size: 14px;
+        font-weight: 500;
+        color: #0f171c;
+    }
+
+    .nav-link.active {
+        color: #000 !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        background-color: #fff9dc !important;
+        border-bottom: none !important;
+        padding: 4px 8px !important;
+        border-radius: 12px !important;
+    }
+
+    .nav-tabs-custom .nav-item .nav-link::after {
+        height: 0px !important;
+    }
+
+    .nav-tabs-custom.card-header-tabs .nav-link {
+        font-weight: 400;
+        font-size: 12px;
+        border-bottom: 1px dashed #ddd8f9;
+        padding: 4px 8px !important;
+        margin-right: 0.5rem;
+    }
+
+    .nav-tabs-custom.card-header-tabs {
+        margin-top: 0;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <p class="title-card-cus">
+                    <svg class="_1QJbu _1O59F _3oSRT" style=" width: 16px; fill: #ffcf01;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="nonzero" d="M15.158 13.333v.89c0 .981-.754 1.777-1.684 1.777H1.684C.75 16 0 15.2 0 14.222V1.778C0 .796.754 0 1.684 0h11.79c.93 0 1.684.796 1.684 1.778v.889h-7.58c-.934 0-1.683.8-1.683 1.777v7.112c0 .981.754 1.777 1.684 1.777h7.579zm-7.58-1.777H16V4.444H7.579v7.112zm3.37-2.223c-.698 0-1.264-.597-1.264-1.333s.566-1.333 1.263-1.333c.698 0 1.264.597 1.264 1.333s-.566 1.333-1.264 1.333z"></path></svg>
+                    <span class="ms-2">Số dư</span>
+                </p>
+                <h3 class="mb-2 text-center">
+                    @PTEcommerce.Business.Helper.NumberFormat(customer.AmountAvaiable) USD
+                </h3>
+                <p class="mb-1 text-center">
+                    Tổng lợi nhuận : @PTEcommerce.Business.Helper.NumberFormat(customer.AmountRef) USD
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <p class="title-card-cus">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="_3od3_" style=" width: 16px; fill: #ffcf01;" viewBox="0 0 16 16"><path d="M9.41421,10.82843,5.17157,6.58579a1,1,0,0,1,0-1.41421h0a1,1,0,0,1,1.41421,0l4.24264,4.24264a1,1,0,0,1,0,1.41421h0A1,1,0,0,1,9.41421,10.82843Zm-5.65683,0L5.17157,9.41425,3.96973,8.2124A3,3,0,0,1,8.21191,3.96924L9.41431,5.17145l1.41412-1.41412L9.62634,2.55524a5,5,0,0,0-7.071,7.07111Zm8.48529-5.65692L10.82861,6.58557l1.25732,1.2572a3.0002,3.0002,0,1,1-4.24316,4.24268l-1.257-1.257L5.17157,12.24261,6.429,13.5A5,5,0,1,0,13.5,6.42889Z"></path></svg> <span class="ms-2">Liên kết Đối tác của bạn</span>
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 ms-2">
+                        <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0 d-flex align-items-center" role="tablist">
+                            <li class="nav-item active" role="presentation">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#linkRef" role="tab" aria-selected="false" tabindex="-1">
+                                    Đường dẫn liên kết đối tác
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" data-bs-toggle="tab" href="#codeRef" role="tab" aria-selected="false" tabindex="-1">
+                                    Mã đối tác
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="linkRef" role="tabpanel">
+                        <p class="mb-2 mt-3 text-center">
+                            <a href="javasript:void(0)" class="" style="font-size: 20px; color: #3f1f84; font-weight: 400; border-bottom: 1px dotted #3f1f84 ">https://exness.com/accounts/sign-up?refer=@mems.AccID</a>
+                        </p>
+                        <p class="mb-2 mt-2 text-center">
+                            <a href="javascript:void(0)" class="text-primary" onclick="base.copy('https://exness.com/accounts/sign-up?refer=' + @mems.AccID); alert('Sao chép thành công');"><i class="bx bx-copy"></i> Sao chép</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="codeRef" role="tabpanel">
+                        <p class="mb-2 mt-3 text-center">
+                            <a href="javascript:void(0)" class="text-primary text-decoration-underline" style="font-size: 20px; font-weight: 600">@mems.AccID</a>
+                        </p>
+                        <p class="mb-2 mt-2 text-center">
+                            <a href="javascript:void(0)" class="text-primary" onclick="base.copy(@mems.AccID); alert('Sao chép thành công');"><i class="bx bx-copy"></i> Sao chép</a>
+                        </p>
+                    </div>
+                </div>
+                <p class="text-center mt-2">Xem tất cả các mã đối tác và đường liên kết của bạn <a href="/">tại đây</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body" style="height: 340px">
+                <h4 style="margin-bottom: 2rem"><i class="bx bx-money-withdraw"></i> Hoa hồng đại lý</h4>
+                <div class="row tableCustomer mb-4">
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F1
+                            </div>
+                            <div class="card-footer text-center">
+                                12%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F2
+                            </div>
+                            <div class="card-footer text-center">
+                                11%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F3
+                            </div>
+                            <div class="card-footer text-center">
+                                10%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F4
+                            </div>
+                            <div class="card-footer text-center">
+                                9%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F5
+                            </div>
+                            <div class="card-footer text-center">
+                                8%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-4" style="border: 1px dotted #3f1f84"></p>
+                <div class="row tableCustomer" style="margin-bottom: 2rem">
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F6
+                            </div>
+                            <div class="card-footer text-center">
+                                7%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F7
+                            </div>
+                            <div class="card-footer text-center">
+                                6%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F8
+                            </div>
+                            <div class="card-footer text-center">
+                                5%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F9
+                            </div>
+                            <div class="card-footer text-center">
+                                4%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bx bxs-user-detail"></i> F10
+                            </div>
+                            <div class="card-footer text-center">
+                                3%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-4">
+                    <div class="row">
+                        <div class="col"><span style="font-size: 18px; font-weight: 500; color: #0f171c">Báo cáo nhanh</span></div>
+                        <div class="col-auto">
+                            <label style=" font-size:10px;color: #8d9194;">Giai đoạn</label>
+                            <div class="input-group">
+                                <input type="date" style="border: none; border-radius: 0; border-bottom: 1px solid #ddd8f9; padding: 0 10px;" class="form-control" id="start" value="@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")" />
+                                <input type="date" style="border: none; border-radius: 0; border-bottom: 1px solid #ddd8f9; padding: 0 10px;" class="form-control" id="end" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                    </div>
+                </h4>
+                <div class="row">
+                    <div class="col" style="margin-right: 25px">
+                        <p style="font-size: 14px; font-weight: 500; color: #0f171c; display: flex; align-items: center">
+                            <svg class="_3pW83" style="fill: #ffcf01; width: 16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="nonzero" d="M16 16.066H0V1.786h2.667V14.28h1.777v-7.14h2.667v7.14H8.89V4.463h2.667v9.818h1.777v-3.57H16z"></path></svg>
+                            <span style="margin-left: 10px; margin-bottom: -5px;">Lợi nhuận</span></p>
+                        <h3 class="text-center" id="txtPrices"> 0 USD</h3>
+                        <p  style="font-size:12px;color: #8d9194;" class="text-center">Trên mỗi thời hạn</p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9"></p>
+                    </div>
+                    <div class="col" style="margin-left: 25px">
+                        <p style="font-size: 14px; font-weight: 500; color: #0f171c; display: flex; align-items: center">
+                            <svg class="_3pW83" style="fill: #ffcf01; width: 16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="nonzero" d="M16 16.066H0V1.786h2.667V14.28h1.777v-7.14h2.667v7.14H8.89V4.463h2.667v9.818h1.777v-3.57H16z"></path></svg>
+                            <span style="margin-left: 10px; margin-bottom: -5px;">Đăng ký</span>
+                        </p>
+                        <h3 class="text-center" id="txtAccount">
+                            0
+                        </h3>
+                        <p class="text-center" style="font-size:12px;color: #8d9194;">Trên mỗi thời hạn</p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9; margin-bottom: 40px"></p>
+                        <p style="border: 1px dashed #ddd8f9"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

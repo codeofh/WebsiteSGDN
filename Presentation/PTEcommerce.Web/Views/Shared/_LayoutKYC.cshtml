@@ -1,0 +1,146 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var mobile = Request.Browser.IsMobileDevice;
+}
+<!doctype html>
+<html lang="en" data-layout="horizontal" data-layout-style="" data-layout-position="fixed" data-topbar="light">
+<head>
+
+    <meta charset="utf-8" />
+    <title>Horizontal Layout | Velzon - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Assets/assets/images/favicon.ico">
+
+    <!-- plugin css -->
+    <link href="~/Assets/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+    <!-- dropzone css -->
+    <link rel="stylesheet" href="~/Assets/assets/libs/dropzone/dropzone.css" type="text/css" />
+
+    <!-- Filepond css -->
+    <link rel="stylesheet" href="~/Assets/assets/libs/filepond/filepond.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/Assets/assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css">
+
+    <!-- Layout config Js -->
+    <script src="~/Assets/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/Assets/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/Assets/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/Assets/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/Assets/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    @RenderSection("css", required: false)
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar" style="background-color: #0f171c" class="">
+            <div class="layout-width">
+                <div class=" navbar-menu navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box horizontal-logo">
+                            <a href="index.html" class="logo logo-dark">
+                                <img src="~/Assets/assets/images/logo.svg" height="35" />
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex align-items-center">
+
+                        <div class="dropdown ms-1 topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" fill="#fff" class="style_globe__sb8Ll"><g><path d="M12.956,5a6.02248,6.02248,0,0,0-3.0826-3.01231A10.57906,10.57906,0,0,1,10.80084,5ZM2.044,5H4.19916a10.579,10.579,0,0,1,.92749-3.01231A6.02245,6.02245,0,0,0,2.044,5ZM12.956,10H10.80084a10.57908,10.57908,0,0,1-.92748,3.01231A6.02249,6.02249,0,0,0,12.956,10Zm.355-1a6.046,6.046,0,0,0,0-3H10.93c.04591.48466.07.9863.07,1.5s-.0241,1.01534-.07,1.5ZM2.044,10a6.02246,6.02246,0,0,0,3.0826,3.01231A10.579,10.579,0,0,1,4.19916,10ZM1.689,9H4.07C4.0241,8.51534,4,8.0137,4,7.5s.0241-1.01534.07-1.5H1.689a6.04608,6.04608,0,0,0,0,3ZM7,14.9836a7.5,7.5,0,1,1,1,0V15H7ZM8,1.16321V5H9.78475C9.44059,3.06788,8.73051,1.631,8,1.16321Zm-1,0C6.26949,1.631,5.55941,3.06788,5.21525,5H7ZM8,13.83679C8.73051,13.369,9.44059,11.93212,9.78475,10H8Zm-1,0V10H5.21525C5.55941,11.93212,6.26949,13.369,7,13.83679ZM8,6V9H9.92421A14.74892,14.74892,0,0,0,10,7.5,14.74892,14.74892,0,0,0,9.92421,6ZM7,6H5.07579a14.881,14.881,0,0,0,0,3H7Z"></path></g></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid mt-3">
+
+                    @RenderBody()
+                    <div class="row mt-5">
+                        <div class="col-lg-12">
+                            <p class="text-secondary font-size-13">
+                                Exness B.V. là Nhà giao dịch chứng khoán được đăng ký tại Curaçao với số đăng ký 148698(0) và được Ngân hàng Trung ương Curaçao và Sint Maarten (CBCS) cấp phép với số giấy phép 0003LSI. Exness B.V. được ủy quyền chính thức để hoạt động theo thương hiệu và nhãn hiệu của Exness.
+                            </p>
+                            <p class="text-secondary font-size-13">
+                                Chỉ có thể sao chép thông tin trên trang web này khi có sự cho phép rõ bằng văn bản của Exness. Cảnh báo rủi ro chung: CFD là sản phẩm có đòn bẩy. Giao dịch CFD tiềm ẩn rủi ro cao, do đó có thể không thích hợp đối với tất cả các nhà đầu tư. Giá trị đầu tư có thể tăng và giảm và các nhà đầu tư có thể mất toàn bộ vốn đầu tư. Trong mọi trường hợp, Công ty sẽ không chịu trách nhiệm pháp lý đối với bất kỳ cá nhân hay tổ chức nào về bất kỳ tổn thất hay thiệt hại nào hoàn toàn hoặc một phần gây ra bởi, phát sinh từ, hoặc liên quan đến bất kỳ giao dịch nào liên quan đến CFD. Tìm hiểu thêm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span>© 2008-2023. Exness</span>
+                        </div>
+                        <div class="col-sm-9">
+                            <a class="float-end footer-a" href="#">Giấy tờ pháp lý</a>
+                            <a class="me-2 footer-a float-end" href="#">Các hướng dẫn bảo mật</a>
+                            <a class="me-2 footer-a float-end" href="#">Phòng chống rửa tiền</a>
+                            <a class="me-2 footer-a float-end" href="#">Thông báo rủi ro</a>
+                            <a class="me-2 footer-a float-end" href="#">Thoả thuận Bảo mật</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Assets/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/Assets/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/Assets/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/Assets/assets/js/plugins.js"></script>
+    <!-- dropzone min -->
+    <script src="~/Assets/assets/libs/dropzone/dropzone-min.js"></script>
+    <!-- filepond js -->
+    <script src="~/Assets/assets/libs/filepond/filepond.min.js"></script>
+    <script src="~/Assets/assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js"></script>
+    <script src="~/Assets/assets/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js"></script>
+    <script src="~/Assets/assets/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="~/Assets/assets/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js"></script>
+
+    <script src="~/Assets/assets/js/pages/form-file-upload.init.js"></script>
+    <input type="file" multiple="multiple" class="dz-hidden-input" tabindex="-1" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+    <!-- App js -->
+    <script src="~/Assets/assets/js/app.js"></script>
+    <script src="~/Assets/controller/base.js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+    <script src="~/Assets/controller/accounting.js"></script>
+    <script src="/Assets/controller/@(controller).js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,331 @@
+﻿
+@{
+    ViewBag.Title = "KYC";
+    Layout = "~/Views/Shared/_LayoutKYC.cshtml";
+    var accountData = (marketplace.AccountCustomer)ViewBag.Account;
+    var emailClass = false;
+    var phoneClass = false;
+    var infoClass = false;
+    if (!accountData.VerifyEmail)
+    {
+        emailClass = true;
+    }
+    else
+    {
+        if (!accountData.VerifyPhone)
+        {
+            phoneClass = true;
+        }
+        else if (!accountData.VerifyKYC)
+        {
+            infoClass = true;
+        }
+    }
+}
+@section css{
+    <style>
+        .custom-verti-nav-pills .nav-link {
+            width: 100% !important;
+            color: #2a2f34;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            font-size: 15px;
+        }
+
+            .custom-verti-nav-pills .nav-link:hover {
+                color: #2a2f34;
+            }
+
+            .custom-verti-nav-pills .nav-link.active {
+                color: #2a2f34;
+            }
+    </style>
+}
+<div class="row">
+    <div class="col-lg-3">
+        @if (!accountData.VerifyEmail || !accountData.VerifyKYC || !accountData.VerifyPhone)
+        {
+            <div class="nav nav-pills flex-column nav-pills-tab custom-verti-nav-pills text-center" role="tablist" aria-orientation="vertical">
+                @if (!accountData.VerifyEmail)
+                {
+                    <a class="nav-link @(emailClass ? "active show" : "") " id="custom-v-pills-home-tab" data-bs-toggle="pill" href="#custom-v-pills-home" role="tab" aria-controls="custom-v-pills-home" aria-selected="true">
+                        <i class="bx bxl-gmail d-block fs-23 mb-1"></i>
+                        Xác minh email
+                    </a>
+                }
+
+                @if (!accountData.VerifyPhone)
+                {
+                    <a class="nav-link @(phoneClass ? "active show" : "")" id="custom-v-pills-profile-tab" data-bs-toggle="pill" href="#custom-v-pills-profile" role="tab" aria-controls="custom-v-pills-profile" aria-selected="false" tabindex="-1">
+                        <i class="bx bx-phone d-block fs-23 mb-1"></i>
+                        Xác minh qua điện thoại
+                    </a>
+                }
+
+                @if (!accountData.VerifyKYC)
+                {
+                    <a class="nav-link @(infoClass ? "active show" : "")" id="custom-v-pills-messages-tab" data-bs-toggle="pill" href="#custom-v-pills-messages" role="tab" aria-controls="custom-v-pills-messages" aria-selected="false" tabindex="-1">
+                        <i class="bx bx-id-card d-block fs-23 mb-1"></i>
+                        Thông tin cá nhân
+                    </a>
+                }
+            </div>
+        }
+
+
+    </div> <!-- end col-->
+    <div class="col-lg-9">
+        <div class="tab-content text-muted mt-3 mt-lg-0">
+            @if (!accountData.VerifyEmail)
+            {
+                <div class="tab-pane fade @(emailClass ? "active show" : "")" id="custom-v-pills-home" role="tabpanel" aria-labelledby="custom-v-pills-home-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Xác minh email</h3>
+                            <p class="text-dark">
+                                Nhập mã xác minh gồm 6 chữ số mà chúng tôi đã gửi tới email của bạn.
+
+                            </p>
+                            <p class="text-dark">
+                                Nếu bạn vẫn không tìm thấy mã trong hộp thư đến, hãy kiểm tra thư mục Spam.
+                            </p>
+                            Chúng tôi sẽ gửi mã xác minh đến
+                            <div class="form-group mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="@(accountData.Email.Split('@')[0].Substring(0, 2) + "·······" + accountData.Email.Split('@')[0].Substring(accountData.Email.Split('@')[0].Length - 2, 2) + "@" + accountData.Email.Split('@')[1])" readonly="readonly" />
+                                    <button type="button" id="btnSendOTPEmail" class="btn btn-primary">Gửi mã cho tôi</button>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Mã xác minh từ email</label>
+                                <input type="text" id="txtOtpEmail" class="form-control" inputmode="numeric" />
+                            </div>
+                            <div class="mb-3" id="notificationEmail">
+
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="btnVerifyOtpEmail" class="btn btn-primary w-100">Tiếp tục</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(accountData.Phone))
+            {
+
+
+                <div class="tab-pane fade @(phoneClass ? "active show" : "")" id="custom-v-pills-profile" role="tabpanel" aria-labelledby="custom-v-pills-profile-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Xác minh qua điện thoại</h3>
+                            <div class="form-group mb-3">
+                                 <input type="text" id="txtPhone" class="form-control" value="" placeholder="Nhập số điện thoại" />
+                            </div>
+                            <div class="mb-3" id="notificationPhone">
+
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="btnVerifyOtpPhone" class="btn btn-primary w-100">Tiếp tục</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!accountData.VerifyKYC)
+            {
+                <div class="tab-pane fade @(infoClass ? "active show" : "")" id="custom-v-pills-messages" role="tabpanel" aria-labelledby="custom-v-pills-messages-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            @if (!string.IsNullOrEmpty(accountData.FullName))
+                            {
+                                if (!string.IsNullOrEmpty(accountData.KYCBack) && !string.IsNullOrEmpty(accountData.KYCFront))
+                                {
+                                    <h3 class="text-center text-primary">Thông tin của quý khách đang được xác minh</h3>
+                                    <h5 class="text-center">Quý khách vui lòng chờ đợi quản trị viên xác minh danh tính.</h5>
+                                }
+                                else
+                                {
+                                    <div class="lastStep">
+                                        <h3>Xác minh giấy tờ</h3>
+                                        <h5 class="mt-4">Vui lòng chỉ tải lên một trong những giấy tờ xác minh thông tin sau đây</h5>
+                                        <ul>
+                                            <li>CMND/CCCD (mặt trước và mặt sau)</li>
+                                            <li>Bằng lái xe (mặt trước và mặt sau)</li>
+                                            <li>Hộ chiếu</li>
+                                        </ul>
+                                        <div class="mt-2">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <img alt="Do" width="100%" src="https://my.exness.com/kyc/instructions-assets/default/por-do.svg">
+                                                    <h5 class="text-success mt-2">Chấp nhận</h5>
+                                                    <ul>
+                                                        <li> Ảnh chụp rõ ràng, sắc nét</li>
+                                                        <li>Có thể đọc rõ thông tin chi tiết</li>
+                                                        <li>
+                                                            Chất lượng ảnh cao hoặc tốt
+                                                        </li>
+                                                        <li>Nhìn rõ 4 góc</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <img alt="Dont" width="100%" src="https://my.exness.com/kyc/instructions-assets/default/por-dont.svg">
+                                                    <h5 class="text-danger mt-2">Không chấp nhận</h5>
+                                                    <ul>
+                                                        <li>Ảnh mờ nhòe, mất nét</li>
+                                                        <li>Không thể đọc rõ thông tin chi tiết</li>
+                                                        <li>Chất lượng ảnh kém (quá tối hoặc quá sáng)</li>
+                                                        <li>Không nhìn rõ tất cả các góc</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="row">
+                                                <div class="col-lg-6 mb-3">
+                                                    <p class="form-label">Chọn ảnh mặt trước</p>
+                                                    <input type="file" id="kycFontImage" accept="image/*" onchange="loadFileFront(event)" />
+                                                    <img width="100%" style="margin-top: 15px;" id="kycFrontPreview" />
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <p class="form-label">Chọn ảnh mặt sau</p>
+                                                    <input type="file" id="kycBackImage" accept="image/*" onchange="loadFileBack(event)" />
+                                                    <img width="100%" style="margin-top: 15px;" id="kycBackPreview" />
+                                                </div>
+                                                <div class="col-lg-12 mb-3" id="notificationImageKYC"></div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <button type="button" id="btnSubmitImageKYC" class="btn btn-primary w-100">Tiếp tục</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                if (string.IsNullOrEmpty(accountData.KYCBack) || string.IsNullOrEmpty(accountData.KYCBack))
+                                {
+                                    <div class="firstStep">
+                                        <h3 class="mb-4">Thông tin cá nhân</h3>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Họ và tên</label>
+                                            <input type="text" id="txtFullName" class="form-control" />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Giới tính</label>
+                                            <p>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" name="txtGender" id="txtMale" class="form-check-input" value="1" checked="checked" />
+                                                    <label for="txtMale">Nam</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" name="txtGender" id="txtFemale" class="form-check-input" value="0" />
+                                                    <label for="txtFemale">Nữ</label>
+                                                </div>
+                                            </p>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Ngày sinh</label>
+                                            <input type="date" id="txtBirthOfDate" class="form-control" />
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Địa chỉ</label>
+                                            <input type="text" id="txtAddress" class="form-control" />
+                                        </div>
+                                        <div class="mb-3" id="notificationInformation">
+
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <button type="button" id="btnUpdateInformation" class="btn btn-primary w-100">Tiếp tục</button>
+                                        </div>
+                                    </div>
+                                    <div class="lastStep d-none">
+                                        <h3>Xác minh giấy tờ</h3>
+                                        <h5 class="mt-4">Vui lòng chỉ tải lên một trong những giấy tờ xác minh thông tin sau đây</h5>
+                                        <ul>
+                                            <li>CMND/CCCD (mặt trước và mặt sau)</li>
+                                            <li>Bằng lái xe (mặt trước và mặt sau)</li>
+                                            <li>Hộ chiếu</li>
+                                        </ul>
+                                        <div class="mt-2">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <img alt="Do" width="100%" src="https://my.exness.com/kyc/instructions-assets/default/por-do.svg">
+                                                    <h5 class="text-success mt-2">Chấp nhận</h5>
+                                                    <ul>
+                                                        <li> Ảnh chụp rõ ràng, sắc nét</li>
+                                                        <li>Có thể đọc rõ thông tin chi tiết</li>
+                                                        <li>
+                                                            Chất lượng ảnh cao hoặc tốt
+                                                        </li>
+                                                        <li>Nhìn rõ 4 góc</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <img alt="Dont" width="100%" src="https://my.exness.com/kyc/instructions-assets/default/por-dont.svg">
+                                                    <h5 class="text-danger mt-2">Không chấp nhận</h5>
+                                                    <ul>
+                                                        <li>Ảnh mờ nhòe, mất nét</li>
+                                                        <li>Không thể đọc rõ thông tin chi tiết</li>
+                                                        <li>Chất lượng ảnh kém (quá tối hoặc quá sáng)</li>
+                                                        <li>Không nhìn rõ tất cả các góc</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="row">
+                                                <div class="col-lg-6 mb-3">
+                                                    <p class="form-label">Chọn ảnh mặt trước</p>
+                                                    <input type="file" id="kycFontImage" accept="image/*" onchange="loadFileFront(event)" />
+                                                    <img width="100%" style="margin-top: 15px;" id="kycFrontPreview" />
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <p class="form-label">Chọn ảnh mặt sau</p>
+                                                    <input type="file" id="kycBackImage" accept="image/*" onchange="loadFileBack(event)" />
+                                                    <img width="100%" style="margin-top: 15px;" id="kycBackPreview" />
+                                                </div>
+                                                <div class="col-lg-12 mb-3" id="notificationImageKYC"></div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <button type="button" id="btnSubmitImageKYC" class="btn btn-primary w-100">Tiếp tục</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h3 class="text-center text-primary">Thông tin của quý khách đang được xác minh</h3>
+                                    <h5 class="text-center">Quý khách vui lòng chờ đợi quản trị viên xác minh danh tính.</h5>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <h3 class="text-center text-primary">Thông tin của quý khách đã được xác minh</h3>
+            }
+            <!--end tab-pane-->
+        </div>
+    </div> <!-- end col-->
+</div>
+@section scripts{
+
+    <script>
+        var loadFileFront = function (event) {
+            var output = document.getElementById('kycFrontPreview');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+        var loadFileBack = function (event) {
+            var output = document.getElementById('kycBackPreview');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "ĐĂNG NHẬP";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    string refer = (string)ViewBag.Refer;
+
+
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+        <h3>Đăng ký</h3>
+        <div class="card mt-4">
+            <div class="card-body px-4">
+                <div class="p-2">
+                    <form>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Địa chỉ email</label>
+                            <input type="email" class="form-control" id="email" autocomplete="off">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="password-input">Mật khẩu</label>
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <input type="password" class="form-control pe-5 password-input" autocomplete="off" id="password">
+                                <button onclick="showPassword()" class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Mã đối tác (không bắt buộc)</label>
+                            @if (!string.IsNullOrEmpty(refer))
+                            {
+                                <input type="text" class="form-control" id="ref" value="@refer" readonly="readonly" autocomplete=" off">
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" id="ref" autocomplete="off">
+                            }
+                        </div>
+                        <div class="mb-3" id="notification">
+                            <div class="form-check form-check-dark">
+                                <input class="form-check-input" type="checkbox" id="formCheck12" checked="">
+                                <label class="form-check-label" for="formCheck12">
+                                    Tôi tuyên bố và xác nhận rằng mình không phải là công dân hay cư dân Hoa Kỳ, vì mục đích tính thuế.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <button class="btn btn-primary w-100 btn-load" id="btnRegister" type="button">Tiếp tục</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+
+        <div class="mt-4 text-center">
+            <p class="mb-0">Bạn đã có tài khoản Exness? <a href="/accounts/sign-in" class="text-primary"> Đăng nhập </a> </p>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        function showPassword() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+}

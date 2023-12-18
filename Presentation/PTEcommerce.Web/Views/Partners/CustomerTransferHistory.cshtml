@@ -1,0 +1,25 @@
+﻿@model List<marketplace.HistoryTransferExtend>
+@{
+    Layout = null;
+}
+<input class="d-none" type="text" id="totalRow" value="@(Model != null ? Model[0].TotalRow : 0)" />
+<input class="d-none" type="text" id="totalPrice" value="@(Model != null ? Model[0].TotalPrice : 0)" />
+<input class="d-none" type="text" id="totalPakage" value="@(Model != null ? Model[0].TotalPakage : 0)" />
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@item.Email</td>
+            <td class="text-center">@item.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+            <td class="text-center">@item.PakageName</td>
+            <td class="text-center"></td>
+            <td class="text-center">@PTEcommerce.Business.Helper.NumberFormat(item.AmountStart)</td>
+            <td class="text-center">@PTEcommerce.Business.Helper.NumberFormat(item.AmountModified - item.AmountStart)</td>
+        </tr>
+    }
+}
+else
+{
+    <tr><td colspan="7"><svg width="16px" height="16px" viewBox="0 0 16 16" class="css-gxsfda" fill="#7D6CBA"><path d="M8,0a8,8,0,1,0,8,8A8,8,0,0,0,8,0ZM8,14a6,6,0,1,1,6-6A6,6,0,0,1,8,14ZM9,9H7L6.5,4h3Zm0,3H7V10H9Z"></path></svg> Không có dữ liệu</td></tr>
+}

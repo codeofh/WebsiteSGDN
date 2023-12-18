@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "CustomerTransfer";
+    Layout = "~/Views/Shared/Layout_Partner.cshtml";
+}
+
+@section css{
+    <style>
+        .page-content {
+            background-color: #fff
+        }
+    </style>
+}
+<style>
+    label {
+        color: #8d9194;
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 0 !important;
+    }
+
+    .form-control {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0 !important;
+        border-bottom: 1px solid #ddd8f9;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .form-select {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0 !important;
+        border-bottom: 1px solid #ddd8f9;
+        color: #3f1f84;
+    }
+
+    .table {
+        border-color: #3f1f84 !important;
+    }
+
+        .table > thead {
+            border-color: #3f1f84 !important;
+        }
+
+    .small {
+        color: #8d9194 !important;
+    }
+</style>
+<div class="row">
+    <h3 class="mb-4" style="color: #0f171c">Giao dịch khách hàng</h3>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label>Tài khoản khách hàng</label>
+            <select class="form-select">
+                <option value="">Tất cả</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label>Ngày thanh toán</label>
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly="readonly" />
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <a href="#"><svg sty style="width: 16px; fill: rgb(125, 108, 186)" xmlns="http://www.w3.org/2000/svg" class="_3Xe8x" viewBox="0 0 16 16"><path d="M13.65685,13.65685a8,8,0,1,1,0-11.31371A8,8,0,0,1,13.65685,13.65685ZM12.24261,5.17157,10.82843,3.75732,8,6.58575,5.17169,3.75726,3.75745,5.17145,6.58582,8,3.75739,10.82843l1.41418,1.41418L7.99994,9.41425l2.82837,2.82849,1.41425-1.41418L9.41418,8Z"></path></svg> Đặt lại</a>
+        <button type="button" class="btn btn-primary float-end" style="background-color: rgb(255, 207, 1); color: #000; border: 1px solid rgb(255, 207, 1); box-shadow: none">Áp dụng</button>
+    </div>
+    <div class="col-lg-12 mt-4 mb-3">
+        <div class="row">
+            <div class="col text-center">
+                <h3><span style="font-size: 13px" id="totalRefDisplay"></span></h3>
+                <span class="small">Lợi nhuận tính theo USD</span>
+            </div>
+            <div class="col text-center">
+                <h3><span style="font-size: 13px" id="totalQuantityPakage"></span></h3>
+                <span class="small">Khối lượng (lô)</span>
+            </div>
+            <div class="col text-center">
+                <h3><span style="font-size: 13px" id="totalPricePakage"></span></h3>
+                <span class="small">Khối lượng (USD)</span>
+            </div>
+            <div class="col text-center">
+                <h3><span style="font-size: 13px" id="totalQuantity"></span></h3>
+                <span class="small">Giao dịch</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card" style="box-shadow: none">
+            <div class="card-body table-responsive">
+                <table class="table align-middle table-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Tài khoản khách hàng</th>
+                            <th class="text-center">Ngày</th>
+                            <th class="text-center">Công cụ</th>
+                            <th class="text-center">Chênh lệch</th>
+                            <th class="text-center">Khối lượng</th>
+                            <th class="text-center">Lợi nhuận</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tblAccountTransfer" class="text-center"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

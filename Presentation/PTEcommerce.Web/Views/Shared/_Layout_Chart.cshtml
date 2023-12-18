@@ -1,0 +1,386 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+    var action = ViewContext.RouteData.Values["Action"].ToString().ToLower();
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var accountData = new marketplace.AccountCustomer();
+    var listNotification = new List<marketplace.Notification>();
+    marketplace.IAccountCustomer accountCustomer = Framework.EF.SingletonIpl.GetInstance<marketplace.IplAccountCustomer>();
+    marketplace.INotification notification = Framework.EF.SingletonIpl.GetInstance<marketplace.IplNotification>();
+    if (mems != null)
+    {
+        accountData = accountCustomer.GetById(mems.AccID);
+        listNotification = notification.GetListNotificationByUser(accountData.Id);
+    }
+    var mobile = Request.Browser.IsMobileDevice;
+    var resultDeposit = controller.ToLower() == "pa" && action.ToLower() == "deposit" ? true : false;
+    var resultCustom = controller.ToLower() == "pa" && action.ToLower() == "customer" ? true : false;
+    var resultWithdrawal = controller.ToLower() == "pa" && action.ToLower() == "withdrawal" ? true : false;
+    var resultSetting = controller.ToLower() == "pa" && action.ToLower() == "settings" ? true : false;
+    var resultAnalytics = controller.ToLower() == "pa" && action.ToLower() == "analytics" ? true : false;
+    var resultPerformance = controller.ToLower() == "pa" && action.ToLower() == "performance" ? true : false;
+    var resultSocialtrading = controller.ToLower() == "pa" && action.ToLower() == "socialtrading" ? true : false;
+    var resultInvest = controller.ToLower() == "pa" && action.ToLower() == "invest" ? true : false;
+    var resultHistory = controller.ToLower() == "pa" && action.ToLower() == "history" ? true : false;
+}
+<!doctype html>
+<html lang="en" data-layout="horizontal" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="disable" data-layout-mode="dark" data-layout-width="boxed" data-layout-position="fixed" data-layout-style="default" data-sidebar-visibility="show">
+<head>
+
+    <meta charset="utf-8" />
+    <title>Horizontal Layout | Velzon - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Assets/assets/images/favicon.ico">
+
+    <!-- plugin css -->
+    <link href="~/Assets/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Layout config Js -->
+    <script src="~/Assets/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/Assets/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/Assets/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/Assets/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/Assets/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("css", required: false)
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar" style="background-color: #0f171c" class="">
+            <div class="layout-width" style="max-width: 100vw">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <div class="navbar-brand-box horizontal-logo logo-desktop">
+                            <a href="/" class="logo logo-dark">
+                                <img src="~/Assets/assets/images/logo.svg" height="35" />
+                            </a>
+                        </div>
+                        <!-- LOGO -->
+                        <button type="button" class="btn btn-sm px-3 text-white fs-22 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                            <span class="ri-menu-line open">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="navbar-brand-box horizontal-logo logo-mobile">
+                            <a href="/" class="logo logo-dark">
+                                <img src="~/Assets/assets/images/logo.svg" height="35" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center app-user-nav">
+
+                        <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-search fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-search-dropdown">
+                                <form class="p-3">
+                                    <div class="form-group m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn shadow-none text-white fs-24" id="show-amount" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+                                @PTEcommerce.Business.Helper.NumberFormat(accountData.AmountAvaiable) USD
+                                <i class="bx bx-chevron-down text-white"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" style="top: 8px !important" aria-labelledby="show-amount">
+                                <div data-simplebar="init card" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <small class="text-secondary">TÀI KHOẢN GIAO DỊCH</small>
+                                            <br />
+                                            <h4 style="color: #fff">@PTEcommerce.Business.Helper.NumberFormat(accountData.AmountAvaiable) USD</h4>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <button type="button" class="btn w-100" style="border-color: #ffcf01; color: #ffcf01; background-color: transparent" onclick="window.location.href = '/pa/deposit'">Chuyển tiền</button>
+                                                </div>
+                                                <div class="col"> <button type="button" class="btn w-100" style="border-color: #ffcf01; color: #ffcf01; background-color: transparent" onclick="window.location.href = '/pa/withdrawal'">Rút tiền</button></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown ms-1 topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-world fs-22"></i>
+                            </button>
+                        </div>
+
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bxs-grid fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg p-0 dropdown-menu-end">
+                                <div class="p-3">
+                                    <div class="row align-items-center" style="color: #fff">
+                                        <div class="col-lg-6 p-3 text-center">
+                                            <a href="/pa/invest">
+                                                <h5><svg class="IconContainer_icon__XfQWv" style="background-color: #000; fill: #fff;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M13,15 L13,15 C13,14.448 12.553,14 12,14 L8,14 L8,16 L12,16 C12.553,16 13,15.552 13,15 L13,15 Z M16,12 L16,12 C16,11.448 15.553,11 15,11 L8,11 L8,13 L15,13 C15.553,13 16,12.552 16,12 L16,12 Z M14,9 L14,9 C14,8.448 13.553,8 13,8 L8,8 L8,10 L13,10 C13.553,10 14,9.552 14,9 L14,9 Z M2,14 L4,14 L4,10 L2,10 L2,14 Z M6,9 L6,15 C6,15.552 5.553,16 5,16 L1,16 C0.447,16 0,15.552 0,15 L0,9 C0,8.448 0.447,8 1,8 L5,8 C5.553,8 6,8.448 6,9 L6,9 Z M2,4 L4,4 L4,2 L2,2 L2,4 Z M6,1 L6,5 C6,5.552 5.553,6 5,6 L1,6 C0.447,6 0,5.552 0,5 L0,1 C0,0.448 0.447,0 1,0 L5,0 C5.553,0 6,0.448 6,1 L6,1 Z M10,4 L14,4 L14,2 L10,2 L10,4 Z M16,1 L16,5 C16,5.552 15.553,6 15,6 L9,6 C8.447,6 8,5.552 8,5 L8,1 C8,0.448 8.447,0 9,0 L15,0 C15.553,0 16,0.448 16,1 L16,1 Z"></path></svg></h5>
+                                                <p>Khu vực Nhà giao dịch</p>
+                                            </a>
+
+                                        </div>
+                                        <div class="col-lg-6 p-3 text-center">
+                                            <a href="/">
+                                                <h5><svg style="background-color: #000; fill: #fff;" class="IconContainer_icon__XfQWv" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M3 0C2.44772 0 2 0.447715 2 1V3C0.895431 3 0 3.89543 0 5V11C0 12.1046 0.895431 13 2 13V15C2 15.5523 2.44772 16 3 16C3.55228 16 4 15.5523 4 15V13C5.10457 13 6 12.1046 6 11V5C6 3.89543 5.10457 3 4 3V1C4 0.447715 3.55228 0 3 0Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C10 0.447715 10.4477 0 11 0C11.5523 0 12 0.447715 12 1V3C13.1046 3 14 3.89543 14 5V8C14 9.10457 13.1046 10 12 10V12C12 12.5523 11.5523 13 11 13C10.4477 13 10 12.5523 10 12V10C8.89543 10 8 9.10457 8 8V5C8 3.89543 8.89543 3 10 3V1ZM10 8V5H12V8H10Z"></path></svg></h5>
+                                                <p>Trang web chính thức</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-6 p-3 text-center">
+                                            <h5><svg style="background-color: #000; fill: #fff; " class="IconContainer_icon__XfQWv" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 24 24"><path d="M2 0C0.895431 0 0 0.89543 0 2V22C0 23.1046 0.89543 24 2 24H22C23.1046 24 24 23.1046 24 22V2C24 0.895431 23.1046 0 22 0H2ZM22.5279 7.5L16.9349 11.8569L23.0855 16.288H19.9749L15.5277 12.9065L13.8229 14.2999C13.0703 14.9135 10.9535 16.5202 8.60817 16.4998C7.1841 16.4922 5.83966 15.7397 5.20821 14.9317L3.46718 16.288H0.5896L4.35114 13.4174C4.22498 13.1202 4.11679 12.4791 4.11679 11.9685C4.11679 9.49708 5.83057 7.5 9.18628 7.5H14.6709L5.60495 14.6156C6.21833 15.3125 7.31732 15.4928 8.0931 15.4928C10.0597 15.4928 11.3871 14.3372 12.3344 13.5103L14.1926 11.894L11.7931 10.0639H14.4335L15.5458 10.8162L19.7494 7.5H22.5279ZM4.64941 12.1355C4.64941 12.4421 4.70355 12.9623 4.7576 13.1015C4.7576 13.1015 8.39985 10.3796 9.16866 9.79426C9.93747 9.20898 10.2871 9.05127 10.2871 9.05127H8.73567C5.77698 9.05127 4.64941 10.482 4.64941 12.1355Z"></path></svg></h5>
+                                            <p>Thiết bị đầu cuối</p>
+
+                                        </div>
+                                        <div class="col-lg-6 p-3 text-center">
+                                            <a href="/partners">
+                                                <h5><svg style="background-color: #000; fill: #fff;" class="IconContainer_icon__XfQWv" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M7.333,11.173 C9.151,11.713 10,12.495 10,13.999 L10,13.999 L10,15 C10,15.478 9.662,16 9,16 L9,16 L1,16 C0.338,16 5.68434189e-14,15 5.68434189e-14,15 L5.68434189e-14,15 L5.68434189e-14,13.999 C5.68434189e-14,12.492 0.844,11.711 2.666,11.173 L2.666,11.173 L5,13.025 Z M13.3325,7.173 C15.1505,7.713 15.9995,8.495 15.9995,9.999 L15.9995,9.999 L15.9995,11 C15.9995,11.478 15.6615,12 14.9995,12 L14.9995,12 L10.4215,12 C9.7405,10.987 8.5805,10.5 7.6175,10.214 L7.6175,10.214 C8.0025,9.419 8.2215,8.475 8.2215,7.557 C8.2215,7.479 8.2055,7.406 8.2005,7.329 C8.3515,7.276 8.4995,7.222 8.6655,7.173 L8.6655,7.173 L10.9995,9.025 Z M4.9995,5 C6.2265,5 7.2215,6.145 7.2215,7.557 C7.2215,9.32 6.2265,11.173 4.9995,11.173 C3.7715,11.173 2.7775,9.276 2.7775,7.557 C2.7775,6.145 3.7715,5 4.9995,5 Z M10.9995,1 C12.2275,1 13.2225,2.145 13.2225,3.557 C13.2225,5.321 12.2275,7.173 10.9995,7.173 C9.7715,7.173 8.7775,5.276 8.7775,3.557 C8.7775,2.145 9.7715,1 10.9995,1 Z"></path></svg></h5>
+                                                <p>Quan hệ đối tác</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-bell fs-22"></i>
+                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-info">@(listNotification.Count)</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" aria-labelledby="page-header-cart-dropdown">
+                                <div data-simplebar="init card" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        @if (listNotification != null && listNotification.Count > 0)
+                                        {
+                                            foreach (var item in listNotification)
+                                            {
+                                                <li class="list-group-item">
+                                                    <small class="text-secondary">@item.CreatedDate.ToString("HH:mm dd/MM/yyyy")</small>
+                                                    <br />
+                                                    <span>@item.Content</span>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="list-group-item text-center">
+                                                <span>Bạn chưa có thông báo nào</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-user-circle fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" aria-labelledby="page-header-cart-dropdown">
+
+                                <div data-simplebar="init" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item text-center py-4">
+                                            <button type="button" class="btn btn-avatar rounded-circle">
+                                                <i class="bx bx-user-circle fs-24"></i>
+                                            </button>
+                                            <p class="mt-3 mb-0">@mems.Email</p>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <p><a href="/pa/settings">Thiết lập</a></p>
+                                            <a href="/accounts/upgrade">Cấp bậc miễn phí phí qua đêm</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="/accounts/sign-out">Đăng xuất</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center app-notification-nav">
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-cart-dropdown1" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-bell fs-22"></i>
+                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-info">@(listNotification.Count)</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" aria-labelledby="page-header-cart-dropdown1">
+                                <div data-simplebar="init card" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        @if (listNotification != null && listNotification.Count > 0)
+                                        {
+                                            foreach (var item in listNotification)
+                                            {
+                                                <li class="list-group-item">
+                                                    <small class="text-secondary">@item.CreatedDate.ToString("HH:mm dd/MM/yyyy")</small>
+                                                    <br />
+                                                    <span>@item.Content</span>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="list-group-item text-center">
+                                                <span>Bạn chưa có thông báo nào</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <div class="app-menu navbar-menu text-white" style="background-color: #0f171c;">
+            <!-- LOGO -->
+
+            <div id="scrollbar">
+                <div class="container-fluid dropdown-custom-right">
+
+                    <div id="two-column-menu">
+                    </div>
+                    <ul class="navbar-nav" id="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M13,15 L13,15 C13,14.448 12.553,14 12,14 L8,14 L8,16 L12,16 C12.553,16 13,15.552 13,15 L13,15 Z M16,12 L16,12 C16,11.448 15.553,11 15,11 L8,11 L8,13 L15,13 C15.553,13 16,12.552 16,12 L16,12 Z M14,9 L14,9 C14,8.448 13.553,8 13,8 L8,8 L8,10 L13,10 C13.553,10 14,9.552 14,9 L14,9 Z M2,14 L4,14 L4,10 L2,10 L2,14 Z M6,9 L6,15 C6,15.552 5.553,16 5,16 L1,16 C0.447,16 0,15.552 0,15 L0,9 C0,8.448 0.447,8 1,8 L5,8 C5.553,8 6,8.448 6,9 L6,9 Z M2,4 L4,4 L4,2 L2,2 L2,4 Z M6,1 L6,5 C6,5.552 5.553,6 5,6 L1,6 C0.447,6 0,5.552 0,5 L0,1 C0,0.448 0.447,0 1,0 L5,0 C5.553,0 6,0.448 6,1 L6,1 Z M10,4 L14,4 L14,2 L10,2 L10,4 Z M16,1 L16,5 C16,5.552 15.553,6 15,6 L9,6 C8.447,6 8,5.552 8,5 L8,1 C8,0.448 8.447,0 9,0 L15,0 C15.553,0 16,0.448 16,1 L16,1 Z"></path></svg> <span data-key="t-dashboards">Tài khoản của tôi</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link @(resultDeposit ? "active" : "")" href="/pa/deposit" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M2,11.0004 L2,13.0004 C2.00092857,13.5129714 2.38641837,13.9350071 2.8834457,13.9934835 L3,14.0004 L13,14.0004 C13.5125714,13.9994714 13.9346071,13.6139816 13.9930835,13.1169543 L14,13.0004 L14,11.0004 L16,11.0004 L16,13.0004 C15.9990357,14.5982214 14.7511467,15.9031411 13.1762836,15.9952082 L13,16.0004 L3,16.0004 C1.40217857,15.9994357 0.0972589286,14.7515467 0.00519178207,13.1766836 L0,13.0004 L0,11.0004 L2,11.0004 Z M8.9996,-4.97379915e-14 L8.9996,7.55 L10.2776,6.262 C10.6666,5.871 11.3006,5.87 11.6916,6.259 C12.0525231,6.619 12.0819905,7.18605325 11.7784293,7.57869413 L11.6956,7.673 L7.9766,11.413 L4.2776,7.692 C3.8876,7.3 3.8896,6.667 4.2816,6.277 C4.6416,5.91792308 5.20950533,5.89200592 5.60149076,6.19767547 L5.6956,6.281 L6.9996,7.597 L6.9996,-4.97379915e-14 L8.9996,-4.97379915e-14 Z"></path></svg> <span data-key="t-dashboards">Nạp tiền</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link @(resultDeposit ? "active" : "")" href="/pa/deposit" role="button" aria-expanded="false">
+                                <i class="bx bx-money"></i> <span data-key="t-dashboards">Đầu tư</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M2,11.0024 L2,13.0024 C2.001,13.5544 2.448,14.0014 3,14.0024 L3,14.0024 L13,14.0024 C13.552,14.0014 13.999,13.5544 14,13.0024 L14,13.0024 L14,11.0024 L16,11.0024 L16,13.0024 C15.999,14.6594 14.657,16.0014 13,16.0024 L13,16.0024 L3,16.0024 C1.343,16.0014 0.001,14.6594 4.08562073e-14,13.0024 L4.08562073e-14,13.0024 L4.08562073e-14,11.0024 L2,11.0024 Z M11.246,1.2945 C11.636,0.9035 12.27,0.9015 12.66,1.2915 L12.66,1.2915 L16.4,5.0095 L12.68,8.7085 C12.289,9.0985 11.655,9.0975 11.266,8.7055 C10.876,8.3135 10.878,7.6815 11.27,7.2915 L11.27,7.2915 L12.568,6.0025 L10.789,6.0025 C9.802,6.0045 9.002,6.8035 9,7.7915 L9,7.7915 L9,12.0025 L7,12.0025 L7,7.7915 C7.001,5.6985 8.696,4.0025 10.789,4.0025 L10.789,4.0025 L12.555,4.0025 L11.25,2.7085 C10.858,2.3195 10.856,1.6865 11.246,1.2945 Z"></path></svg> <span data-key="t-dashboards">Rút tiền</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M11.5 15H4.5C3.94772 15 3.49148 14.5462 3.5655 13.9989C4.33623 8.29973 11.6638 7.70027 12.4345 2.00107C12.5085 1.45377 12.0523 1 11.5 1H4.5C3.94772 1 3.49148 1.45377 3.5655 2.00107C4.33623 7.70027 11.6638 8.29973 12.4345 13.9989C12.5085 14.5462 12.0523 15 11.5 15Z" stroke-width="2" stroke-linejoin="round" data-stroke=""></path><path d="M8 11C7.42857 11.4 6 13 5.5 14H10.5C10 13 8.57143 11.4 8 11Z" data-fill=""></path></svg> <span data-key="t-dashboards">Lịch sử giao dịch</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="4" width="10" height="11" rx="1" data-stroke="" stroke-width="2"></rect><path d="M8 8C8 9.10457 7.10457 10 6 10C4.89543 10 4 9.10457 4 8C4 6.89543 4.89543 6 6 6C7.10457 6 8 6.89543 8 8Z" data-fill=""></path><path d="M9 15L8.68605 12.4884C8.57976 11.6381 7.85693 11 7 11L6 12.5L5 11C4.14307 11 3.42024 11.6381 3.31395 12.4884L3 15H9Z" data-fill=""></path><path d="M11.6667 12H14C14.5523 12 15 11.5523 15 11V2C15 1.44772 14.5523 1 14 1H6C5.44772 1 5 1.44772 5 2V3.53846" data-stroke="" stroke-width="2"></path></svg> <span data-key="t-dashboards">Giao dịch xã hội</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M15 8H11.5L9 11.5L7 4.5L4.5 8H1" data-stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><rect x="1" y="1" width="14" height="14" rx="1" data-stroke="" stroke-width="2"></rect></svg> <span data-key="t-dashboards">Hiệu suất</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#" role="button" aria-expanded="false">
+                                <svg class="feather feather-home icon-dual" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path d="M9,0 L9.55181183,2.2026104 C10.0659889,2.33989304 10.5529746,2.5437604 11.0029675,2.8044109 L12.9497475,1.63603897 L14.363961,3.05025253 L13.1961695,4.99803468 C13.4567123,5.44804214 13.6604749,5.93502854 13.7976583,6.44919495 L16,7 L16,9 L13.7973896,9.55181183 C13.660107,10.0659889 13.4562396,10.5529746 13.1955891,11.0029675 L14.363961,12.9497475 L12.9497475,14.363961 L11.0029675,13.1955891 C10.5529746,13.4562396 10.0659889,13.660107 9.55181183,13.7973896 L9,16 L7,16 L6.44919495,13.7976583 C5.93464684,13.6603731 5.4473191,13.4564097 4.99703251,13.1955891 L3.05025253,14.363961 L1.63603897,12.9497475 L2.8044109,11.0029675 C2.5437604,10.5529746 2.33989304,10.0659889 2.2026104,9.55181183 L2.6039219e-16,9 L-1.0700185e-16,7 L2.20234168,6.44919495 C2.33962695,5.93464684 2.54359028,5.4473191 2.8044109,4.99703251 L1.63603897,3.05025253 L3.05025253,1.63603897 L4.99803468,2.80383054 C5.44804214,2.54328771 5.93502854,2.33952511 6.44919495,2.20234168 L7,0 L9,0 Z M8,6 C6.8954305,6 6,6.8954305 6,8 C6,9.1045695 6.8954305,10 8,10 C9.1045695,10 10,9.1045695 10,8 C10,6.8954305 9.1045695,6 8,6 Z"></path></svg> <span data-key="t-dashboards">Thiết lập</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+
+            <div class="sidebar-background"></div>
+        </div>
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content pb-0">
+                @if (accountData.Id > 0)
+                {
+                    if (string.IsNullOrEmpty(accountData.FullName) || !accountData.VerifyKYC || !accountData.VerifyEmail || !accountData.VerifyPhone)
+                    {
+                        <div style="background: #edf4ff; box-shadow: 0 2px 4px 0 rgba(0,0,0,.15); margin-top: 5px; padding: 12px 0px;">
+                            <div class="container-fluid row p-0">
+                                <div class="col-auto d-flex align-items-center">
+                                    <i class="bx bx-info-circle" style="font-size: 30px; color: #3070de;"></i>
+
+                                </div>
+                                <div class="col">
+                                    <p style="margin: 0px; font-weight: 600; font-size: 1rem; line-height: 1.5rem; color: #3070de; ">Thao tác cần thiết</p>
+                                    <span style="margin: 0px; font-weight: 400; font-size: 0.875rem; line-height: 1.25rem; color: #0f171c">Vui lòng xác minh hồ sơ của bạn để bắt đầu giao dịch</span>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" style="box-shadow:none" onclick="window.location.href = '/customer/kyc'" class="btn btn-primary">Hoàn tất xác minh</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="container-fluid px-0 row m-0" style="max-width: 100vw; background-color: #0f171c;">
+                    <div class="col-auto px-0">
+                        <ul class="list-group list-group-flush" style="width: 200px">
+                            <li class="list-group-item"> BTC</li>
+                            <li class="list-group-item">XAU/USD</li>
+                            <li class="list-group-item"> AAPL</li>
+                            <li class="list-group-item"> EUR/USD</li>
+                            <li class="list-group-item"> GBP/USD</li>
+                            <li class="list-group-item">  USD/JPY</li>
+                            <li class="list-group-item"> USOIL</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col px-0 w-100">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Assets/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/Assets/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/Assets/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/Assets/assets/js/plugins.js"></script>
+    <!-- Dashboard init -->
+    <script src="~/Assets/assets/js/pages/dashboard-analytics.init.js"></script>
+    <!-- App js -->
+    <script src="~/Assets/assets/js/app.js"></script>
+    <script src="~/Assets/controller/base.js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+    <script src="~/Assets/controller/accounting.js"></script>
+    <script src="/Assets/controller/@(controller).js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

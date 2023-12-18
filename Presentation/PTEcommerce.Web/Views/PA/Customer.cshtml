@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var customer = (marketplace.AccountCustomer)ViewBag.Account;
+}
+<style>
+    .border-custom {
+        border: 1px solid #e3e4e5;
+        border-radius: 6px;
+    }
+
+    .box-shadow-none {
+        box-shadow: none;
+    }
+    .btn.btn-default:hover {
+        border: 1px solid #e3e4e5;
+        color: #000;
+    }
+</style>
+<div class="card w-100">
+    <div class="card-body">
+        <h3 class="mb-4">Tài khoản của tôi</h3>
+        <div class="card mb-3 box-shadow-none border-custom">
+            <div class="card-body py-4 px-4 fs-15 row">
+                <div class="row">
+                    <div class="col d-flex align-items-center">
+                        <div>
+                            <p class="m-0"><span  style="padding: 3px 6px; background-color: #FFE056">Thực</span> @mems.Email</p>
+                            <h3 class="m-0 pt-3">@PTEcommerce.Business.Helper.NumberFormat(customer.AmountAvaiable) USD</h3>
+                        </div>
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                        <button type="button" class="btn btn-default me-2 box-shadow-none border-custom" onclick="window.location.href= '/pa/deposit'">Nạp tiền</button>
+                        <button type="button" class="btn btn-default me-2 box-shadow-none border-custom" onclick="window.location.href= '/pa/withdrawal'">Rút tiền</button>
+                        <button type="button" class="btn btn-primary box-shadow-none border-custom"  onclick="window.location.href= '/pa/invest'">Giao dịch tiền</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

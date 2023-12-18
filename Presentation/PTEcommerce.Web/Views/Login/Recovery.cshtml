@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Recovery";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+        <h3>Cài đặt lại mật khẩu</h3>
+        <div class="card mt-4">
+            <div class="card-body px-4">
+                <div class="p-2">
+                    <form>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Địa chỉ email</label>
+                            <input type="text" class="form-control" id="username" autocomplete="off">
+                        </div>
+                        <div class="mb-3" id="notification">
+
+                        </div>
+                        <div class="mb-4">
+                            <button class="btn btn-primary w-100 btn-load" id="btnResetPassword" type="button">Tiếp tục</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+
+        <div class="mt-4 text-center">
+            <p class="mb-0"><a href="/accounts/sign-up" class="text-primary">Đăng nhập ngay </a> </p>
+        </div>
+
+    </div>
+</div>

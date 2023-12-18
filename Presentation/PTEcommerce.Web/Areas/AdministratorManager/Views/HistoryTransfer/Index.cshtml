@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AdministratorManager/Views/Shared/_Layout.cshtml";
+    var listAccount = (List<marketplace.AccountCustomer>)ViewBag.ListAccount;
+    var listAccountAdmin = (List<marketplace.AccountAdmin>)ViewBag.ListAccountAdmin;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">
+                    Lịch sử giao dịch
+                </h4>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-3 form-group mb-3">
+                            <select class="form-select" id="sltAccount">
+                                <option value="0">Khách hàng</option>
+                                @if (listAccount != null && listAccount.Count > 0)
+                                {
+                                    foreach (var item in listAccount)
+                                    {
+                                        <option value="@item.Id">@item.Email</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-3 form-group mb-3">
+                            <select class="form-select" id="sltAccountAdmin">
+                                <option value="0">Người duyệt</option>
+                                @if (listAccountAdmin != null && listAccountAdmin.Count > 0)
+                                {
+                                    foreach (var item in listAccountAdmin)
+                                    {
+                                        <option value="@item.Id">@item.FullName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-3 form-group mb-3">
+                            <select class="form-select" id="sltType">
+                                <option value="0">Loại giao dịch</option>
+                                <option value="1">Nạp tiền</option>
+                                <option value="2">Gói đầu tư</option>
+                                <option value="3">Rút tiền</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 form-group mb-3">
+                            <input type="date" class="form-control" id="startDate" value="@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))" />
+                        </div>
+                        <div class="col-lg-2 form-group mb-3">
+                            <input type="date" class="form-control" id="endDate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
+                        </div>
+                        <div class="col-lg-1 form-group mb-3">
+                            <button type="button" class="btn btn-primary" id="btnSearch"><i class="bx bx-search"></i></button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="tblHistoryTransfer"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

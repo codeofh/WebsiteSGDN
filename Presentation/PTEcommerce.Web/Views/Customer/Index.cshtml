@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var memberSession = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var listBank = (List<marketplace.Banks>)ViewBag.ListBank;
+    var accountData = (marketplace.AccountCustomer)ViewBag.Account;
+}
+<!-- Header -->
+<header class="container-fluid header">
+    <div class="row">
+        <div class="col">
+            <div class="logo-small">
+                <img src="~/Assets/assets/images/HAMEDIA.png" alt="" class="img mt-2" style="width: auto; height: 45px;">
+            </div>
+        </div>
+        <div class="col-auto align-self-center">
+            <button type="button" class="btn btn-link menu-btn text-color-theme mt-2">
+                <i class="bi bi-list size-24"></i>
+            </button>
+        </div>
+    </div>
+</header>
+<!-- Header ends -->
+@if (memberSession != null)
+{
+    <!-- main page content -->
+    <div class="main-container container">
+
+        <!-- profile picture -->
+        <div class="row  mb-4">
+            <div class="col-auto">
+                <figure class="avatar avatar-100 rounded mx-auto">
+                    <img src="~/Assets/assets/images/Avatar12.png" alt="">
+                </figure>
+            </div>
+            <div class="col align-self-center">
+                <h5 class="text-white">@memberSession.Username</h5>
+                <b class="text-white">
+                    Số dư: <span class="moneyReload"></span>
+                </b>
+            </div>
+        </div>
+
+        <!-- add edit address form -->
+        <div class="row mb-3">
+            <div class="col">
+                <h5 class="mb-0 text-white">THÔNG TIN TÀI KHOẢN</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-light shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <input type="text" class="form-control" value="@accountData.FullName" id="inputFullName">
+                                    <label class="form-control-label" for="address2">Họ và tên</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <input type="text" class="form-control" value="@accountData.PhoneNumber" inputmode="numeric" id="inputPhoneNumber">
+                                    <label class="form-control-label" for="address2">Số điện thoại</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <select class="form-select" id="sltGender">
+                                        <option value="Nam" @(accountData.Gender == "Nam" ? "selected" : "")>Nam</option>
+                                        <option value="Nữ" @(accountData.Gender == "Nữ" ? "selected" : "")>Nữ</option>
+                                    </select>
+                                    <label class="form-control-label" for="address2">Giới tính</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <select class="form-select" id="sltBank">
+                                        <option>Chọn ngân hàng</option>
+                                        @if (listBank != null && listBank.Count > 0)
+                                        {
+                                            foreach (var item in listBank)
+                                            {
+                                                <option value="@item.Id" @(item.Id == accountData.Id ? "selected" : "")>@item.BankName</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-control-label" for="address1">Ngân hàng</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <input type="text" class="form-control" value="@accountData.BankAccount" id="inputBankAccount">
+                                    <label class="form-control-label" for="address2">Chủ tài khoản</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="form-group form-floating">
+                                    <input type="text" class="form-control" value="@accountData.BankNumber" id="inputBankNumber">
+                                    <label class="form-control-label" for="address3">Số tài khoản</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row h-100 mb-4">
+            <div class="col-12 d-grid"><a href="javascript:void(0)" id="btnUpdateInformation" class="btn btn-lg btn-default shadow-sm">Cập nhật thông tin</a></div>
+        </div>
+
+        <!-- change password -->
+        <div class="row mb-3">
+            <div class="col">
+                <h5 class="mb-0 text-white">ĐỔI MẬT KHẨU</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-light shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="row h-100">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-floating  mb-3">
+                                    <input type="password" class="form-control" placeholder="Mật khẩu mới"
+                                           id="password">
+                                    <label for="password">Mật khẩu mới</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-floating ">
+                                    <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" id="confirmpassword">
+                                    <label for="confirmpassword">Xác nhận mật khẩu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row h-100 mb-4">
+            <div class="col-12 d-grid"><a href="javascript:void(0)" id="btnChangePassword" class="btn btn-lg btn-default shadow-sm">Thay đổi mật khẩu</a></div>
+        </div>
+
+    </div>
+    <!-- main page content ends -->
+}

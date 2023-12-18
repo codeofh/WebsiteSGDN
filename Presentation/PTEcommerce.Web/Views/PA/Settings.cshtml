@@ -1,0 +1,317 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sessionMember = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var accountData = (marketplace.AccountCustomer)ViewBag.Account;
+    var listBank = (List<marketplace.Banks>)ViewBag.ListBank;
+    var listCustomerBank = (List<marketplace.BankCustomerExtend>)ViewBag.ListCustomerBank;
+    var active = ViewBag.Active;
+    bool isHome = false;
+    bool isProfile = false;
+    bool isBank = false;
+    if (active == "home")
+    {
+        isHome = true;
+    }
+    else if (active == "security")
+    {
+        isProfile = true;
+    }
+    else if (active == "bank")
+    {
+        isBank = true;
+    }
+    else
+    {
+        isHome = true;
+    }
+}
+<style>
+    label {
+        color: #8d9194;
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 10px !important;
+    }
+
+    .form-control {
+        border: 1px solid #111316;
+        padding: 0.5rem 0.9rem;
+        border-radius: 0.25rem;
+    }
+</style>
+<div class="card w-100">
+    <div class="card-body">
+        <h4 class="mb-3">Thiết lập</h4>
+        <ul class="nav nav-tabs mb-3" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link @(isHome ? "active" : "")" data-bs-toggle="tab" href="#home1" role="tab" aria-selected="false" tabindex="-1">
+                    Hồ sơ
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link @(isProfile ? "active" : "")" data-bs-toggle="tab" href="#profile1" role="tab" aria-selected="false" tabindex="-1">
+                    Cài đặt bảo mật
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link @(isBank ? "active" : "")" data-bs-toggle="tab" href="#banklist" role="tab" aria-selected="false" tabindex="-1">
+                    Danh sách tài khoản ngân hàng
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content text-muted">
+            <div class="tab-pane @(isHome ? "active show" : "")" id="home1" role="tabpanel">
+                <ul class="list-group custom-list">
+                    <li class="list-group-item">
+                        <h4 class="mb-4">Thông tin cá nhân</h4>
+                        <p class="mb-2">
+                            Đây là thông tin cá nhân bạn đã cung cấp trong quá trình đăng ký.
+
+                        </p>
+                        <p class="mb-1">
+                            Thông tin này không hiển thị với những người dùng khác.
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Họ và tên</p>
+                        <b>@(string.IsNullOrEmpty(accountData.FullName) ? "Chưa điền" : accountData.FullName)</b>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Ngày sinh</p>
+                        <b>@(accountData.BirthOfDate == accountData.CreatedDate ? "Chưa điền" : accountData.BirthOfDate.ToString("dd/MM/yyyy"))</b>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Giới tính</p>
+                        <b>@(string.IsNullOrEmpty(accountData.Gender) ? "Chưa điền" : (accountData.Gender == "1" ? "Nam" : "Nữ"))</b>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Địa chỉ</p>
+                        <b>@(string.IsNullOrEmpty(accountData.Address) ? "Chưa điền" : accountData.Address) </b>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Quốc gia cư trú</p>
+                        <b>Việt Nam</b>
+                        <p class="mt-5"><b>Thông tin liên hệ</b></p>
+                        <span>Chúng tôi sẽ liên hệ với bạn bằng cách sử dụng những thông tin chi tiết bạn đã cung cấp.</span>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Địa chỉ Email</p>
+                        <b>@(sessionMember.Email.Split('@')[0].Substring(0, 2) + "·······" + sessionMember.Email.Split('@')[0].Substring(sessionMember.Email.Split('@')[0].Length - 2, 2) + "@" + sessionMember.Email.Split('@')[1])</b>
+                    </li>
+                    <li class="list-group-item">
+                            <p>Số điện thoại</p>
+                            @if (string.IsNullOrEmpty(sessionMember.Phone))
+                            {
+                                <b>Chưa điền</b>
+                            }
+                            else
+                            {
+                                <b>@(sessionMember.Phone.Split('@')[0].Substring(0, 2) + "·······" + sessionMember.Phone.Split('@')[0].Substring(sessionMember.Phone.Split('@')[0].Length - 2, 2) + "@" + sessionMember.Phone.Split('@')[1])</b>
+                            }
+                        </li>
+                </ul>
+            </div>
+            <div class="tab-pane @(isProfile ? "active show" : "")" id="profile1" role="tabpanel">
+                <ul class="list-group custom-list">
+                    <li class="list-group-item">
+                        <h4 class="mb-4">Uỷ quyền</h4>
+                        <p class="mb-2">
+                            Thông tin để đăng nhập vào Exness.
+                        </p>
+                        <p class="mb-1">
+                            Thay đổi mật khẩu của bạn bất cứ khi nào bạn nghĩ mật khẩu đã bị xâm phạm.
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-auto">
+                                Đăng nhập
+                            </div>
+                            <div class="col">
+                                <b>@(sessionMember.Email.Split('@')[0].Substring(0, 2) + "·······" + sessionMember.Email.Split('@')[0].Substring(sessionMember.Email.Split('@')[0].Length - 2, 2) + "@" + sessionMember.Email.Split('@')[1])</b>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-auto">Mật khẩu</div>
+                            <div class="col">
+                                ············
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn" style="border: 1px solid rgba(141, 145, 148, 0.6); box-shadow:none; border-radius: 4px; " id="btnShowChange">Thay đổi</button>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center divChangePassword d-none">
+                            <div class="col-lg-5">
+                                <div class="form-group mb-4">
+                                    <label class="small">Mã xác nhận</label>
+                                    <div class="input-group">
+                                        <input type="password" id="txtOTP" class="form-control" placeholder="" />
+                                        <button type="button" id="btnReceiveOTPChangePassword" style="box-shadow: none" class="btn btn-primary">Nhận mã xác nhận</button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="small">Mật khẩu mới</label>
+                                    <input type="password" id="txtPassword" class="form-control" placeholder="" />
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label class="small">Lặp lại mật khẩu mới</label>
+                                    <input type="password" id="txtRepassword" class="form-control" placeholder="" />
+                                </div>
+                                <div id="notificationChangePassword" class="mb-3"></div>
+                                <div class="form-group mb-2">
+                                    <button type="button" id="btnSubmitChangePassword" style="box-shadow: none" class="btn btn-primary w-100 mb-3">Xác nhận</button>
+                                    <button type="button" class="btn w-100" style="border: 1px solid rgba(141, 145, 148, 0.6); box-shadow:none; border-radius: 4px;" id="btnHideChange">Huỷ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane @(isBank ? "active show" : "")" id="banklist" role="tabpanel">
+                <ul class="list-group custom-list">
+                    <li class="list-group-item">
+                        <h4 class="mb-4">Danh sách</h4>
+                        <p class="mb-2">
+                            Thông tin tài khoản ngân hàng.
+                        </p>
+                        <p class="mb-1">
+                            Sử dụng tài khoản tin cậy của bạn để giao dịch rút tiền.
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-12 mb-3">
+                                <button type="button" id="btnShowCreateBankCustomer" class="btn btn-primary" style="box-shadow:none">Thêm mới tài khoản</button>
+                            </div>
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Ngân hàng</th>
+                                            <th>Chủ tài khoản</th>
+                                            <th>Số tài khoản</th>
+                                            <th>Chức năng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (listCustomerBank != null && listCustomerBank.Count > 0)
+                                        {
+                                            foreach (var item in listCustomerBank)
+                                            {
+                                                <tr class="text-center">
+                                                    <td>@item.BankName</td>
+                                                    <td>@item.BankAccount</td>
+                                                    <td>@item.BankNumber</td>
+                                                    <td>
+                                                        <button type="button" data-id="@item.Id" data-bankid="@item.BankId" data-account="@item.BankAccount" data-number="@item.BankNumber" class="btn btn-primary btnShowUpdateBankCustomer">Sửa</button>
+                                                        <button type="button" data-id="@item.Id" data-account="@item.BankAccount" data-number="@item.BankNumber" class="btn btn-danger btnDeleteBankCustomer">Xoá</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="4" class="text-center">
+                                                    Bạn chưa thêm tài khoản ngân hàng nào!
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalShowConfirmCreateOrUpdateBank" class="modal fade" tabindex="-1" data-bs-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content p-3">
+            <div class="modal-body">
+                <h3 class="mb-3 text-center">Tạo mới/Cập nhật tài khoản ngân hàng</h3>
+                <input type="text" class="d-none" id="txtIdBankCustomer" />
+                <div class="row mb-3">
+                    <div class="form-group">
+                        <label>Ngân hàng</label>
+                        <select class="form-select" id="sltIdBank">
+                            <option value="0">Chọn ngân hàng</option>
+                            @if (listBank != null && listBank.Count > 0)
+                            {
+                                foreach (var item in listBank)
+                                {
+                                    <option value="@item.Id">@item.BankName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-group">
+                        <label>Chủ tài khoản</label>
+                        <input type="text" class="form-control" id="txtBankAccount" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-group">
+                        <label>Số tài khoản</label>
+                        <input type="text" class="form-control" inputmode="numeric" id="txtBankNumer" />
+                    </div>
+                </div>
+                <div class="row mb-3" id="notificationCreateOrUpdateBankCustomer">
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" id="btnConfirmCreateOrUpdateBank" class="btn btn-primary w-100">Xác nhận</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Quay lại</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="modalShowConfirmDelete" class="modal fade" tabindex="-1" data-bs-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content p-3">
+            <div class="modal-body text-center">
+                <input type="text" class="d-none" id="txtSubmitIdDelete" />
+                <span class="text-dark fs-20">Bạn có muốn xoá tài khoản <b id="txtBankAccountNumber" class="text-success"></b> không?</span>
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <button type="button" id="btnConfirmDeleteBankCustomer" class="btn btn-primary w-100">Xác nhận</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Quay lại</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+@section scripts{
+    <script>
+        $('#btnShowChange').click(function () {
+            $('.divChangePassword').removeClass('d-none');
+            $('#btnShowChange').hide();
+        });
+        $('#btnHideChange').click(function () {
+            $('.divChangePassword').addClass('d-none');
+            $('#btnShowChange').show();
+        });
+    </script>
+
+}

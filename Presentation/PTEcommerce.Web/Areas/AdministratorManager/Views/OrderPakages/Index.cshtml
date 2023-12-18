@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AdministratorManager/Views/Shared/_Layout.cshtml";
+    var listAccount = (List<marketplace.AccountCustomer>)ViewBag.ListAccount;
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">
+                    Khách hàng đầu tư
+                </h4>
+                <div class="row">
+                    <div class="col-lg-3 form-group mb-3">
+                        <select class="form-select" id="sltAccountSearch">
+                            <option value="0">Khách hàng</option>
+                            @if (listAccount != null && listAccount.Count > 0)
+                            {
+                                foreach (var item in listAccount)
+                                {
+                                    <option value="@item.Id">@item.Email</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-2 form-group mb-3">
+                        <select class="form-select" id="sltStatusSearch">
+                            <option value="0">Trạng thái</option>
+                            <option value="1">Đang xử lý</option>
+                            <option value="2">Thành công</option>
+                            <option value="4">Bị hủy</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 form-group mb-3">
+                        <input type="date" class="form-control" id="startDate" value="@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))" />
+                    </div>
+                    <div class="col-lg-2 form-group mb-3">
+                        <input type="date" class="form-control" id="endDate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
+                    </div>
+                    <div class="col-lg-1 form-group mb-3">
+                        <button type="button" class="btn btn-primary" id="btnSearch"><i class="bx bx-search"></i></button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tblHistoryOrderPakages"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

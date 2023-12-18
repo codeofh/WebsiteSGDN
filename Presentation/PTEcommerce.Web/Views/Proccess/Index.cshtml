@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Header -->
+<header class="container-fluid header">
+    <div class="row">
+        <div class="col">
+            <div class="logo-small">
+                <img src="/Assets/assets/images/HAMEDIA.png" alt="" class="img mt-2" style="width: auto; height: 45px;">
+            </div>
+        </div>
+        <div class="col-auto align-self-center">
+            <button type="button" class="btn btn-link menu-btn text-color-theme mt-2">
+                <i class="bi bi-list size-24"></i>
+            </button>
+        </div>
+    </div>
+</header>
+<!-- Header ends -->
+<input type="text" id="valueTimeCountDown" class="d-none" />
+<input type="text" id="sessionCurrent" class="d-none" />
+<!-- main page content -->
+<div class="main-container container">
+    <div class="d-inline-flex w-100 mb-3">
+        <div class="bg-custom w-65 p-3 text-white border-radius-left-10" style="display: flex; align-items: center">
+            <h4 class="m-0">KẾT QUẢ GẦN NHẤT</h4>
+        </div>
+        <div class="bg-white w-35 p-3 text-dark text-center border-radius-right-10">
+            <h4 class="mb-2" id="resultSession1"></h4>
+            <div class="dashed-line"></div>
+            <h4 class="mb-0 mt-2" id="resultSession2"></h4>
+        </div>
+    </div>
+
+    <div class="d-inline-flex w-100 mb-3">
+        <div class="bg-custom w-65 p-3 text-white border-radius-left-10" style="display: flex; align-items: center">
+            <h4 class="m-0">PHIÊN ĐANG CHẠY</h4>
+        </div>
+        <div class="bg-white w-35 p-3 text-dark text-center border-radius-right-10">
+            <h5 class="mb-2">PHIÊN <span id="sessionName"></span></h5>
+            <div class="dashed-line"></div>
+            <h4 class="mb-0 mt-2" id="timeCountDown"></h4>
+        </div>
+    </div>
+
+    <div class="row gx-2 mb-3">
+        <div class="col-3 col-md-3 col-lg-3 text-center">
+            <a href="javascript:void(0)" class="text-decoration-none" data-id="1" data-name="LỚN">
+                <img src="/Assets/assets/images/loho-03.png" class="pb-3 w-80" alt="LỚN">
+                <span class="px-2 py-1 mt-3 bg-white text-dark border-radius-5 fw-bold">
+                    <input type="checkbox" id="checkMax" />  <label for="checkMax">LỚN</label>
+                </span>
+            </a>
+        </div>
+
+        <div class="col-3 col-md-3 col-lg-3 text-center">
+            <a href="javascript:void(0)" class="text-decoration-none btnSelectResult" data-id="2" data-name="NHỎ">
+                <img src="/Assets/assets/images/loho-04.png" class="pb-3 w-80" alt="NHỎ">
+                <span class="px-2 py-1 mt-3 bg-white text-dark border-radius-5 fw-bold">
+                    <input type="checkbox" id="checkMin" /> <label for="checkMin">NHỎ</label>
+                </span>
+            </a>
+        </div>
+
+        <div class="col-3 col-md-3 col-lg-3 text-center">
+            <a href="javascript:void(0)" class="text-decoration-none btnSelectResult" data-id="3" data-name="ĐÔI">
+                <img src="/Assets/assets/images/loho-01.png" class="pb-3 w-80" alt="ĐÔI">
+                <span class="px-2 py-1 mt-3 bg-white text-dark border-radius-5 fw-bold">
+                    <input type="checkbox" id="checkDouble" name="checkDouble" /> <label for="checkDouble">ĐÔI</label>
+                </span>
+            </a>
+        </div>
+
+        <div class="col-3 col-md-3 col-lg-3 text-center">
+            <a href="javascript:void(0)" class="text-decoration-none btnSelectResult" data-id="4" data-name="ĐƠN">
+                <img src="/Assets/assets/images/loho-02.png" class="pb-3 w-80" alt="ĐƠN">
+                <span class="px-2 py-1 mt-3 bg-white text-dark border-radius-5 fw-bold">
+                    <input type="checkbox" id="checkSingle" name="checkSingle" /> <label for="checkSingle">ĐƠN</label>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-2">
+                    <label>Số tiền cược / 1 đơn vị</label>
+                    <input type="text" class="form-control mb-2" id="txtPricePerChoose" placeholder="Nhập số tiền cược" />
+                    <label>Tổng tiền thanh toán</label>
+                    <input type="text" class="form-control mb-2" id="txtPriceAllOrder" readonly="readonly" />
+                    <button type="button" class="btn btn-success w-100" id="btnSubmitPlayGame">ĐẶT DỰ ĐOÁN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm product mb-3">
+                <div class="card-body p-0">
+                    <h4 class="text-dark pt-2 ps-2">Lịch sử chơi</h4>
+                    <div class=" h-400 overflow-scroll">
+                        <ul class="list-group list-group-flush bg-none px-2" id="listHistoryPlayGames">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- offerslides -->
+    <div class="swiper-container offerslides">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+                <div class="card shadow-sm card-theme">
+                    <div class="card-body p-0">
+                        <img src="/Assets/assets/images/a5.jpg" alt="" class="mw-100 border-radius-10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="card shadow-sm card-themeborder-radius-5">
+                    <div class="card-body p-0">
+                        <img src="/Assets/assets/images/a5.jpg" alt="" class="mw-100 border-radius-10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="card shadow-sm card-theme">
+                    <div class="card-body p-0">
+                        <img src="/Assets/assets/images/a5.jpg" alt="" class="mw-100 border-radius-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main page content ends -->

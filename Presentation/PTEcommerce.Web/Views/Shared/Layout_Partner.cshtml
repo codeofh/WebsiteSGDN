@@ -1,0 +1,321 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+    var action = ViewContext.RouteData.Values["Action"].ToString().ToLower();
+    var mems = PTEcommerce.Web.Models.SessionCustomer.GetUser();
+    var mobile = Request.Browser.IsMobileDevice;
+    var accountData = new marketplace.AccountCustomer();
+    var listNotification = new List<marketplace.Notification>();
+    marketplace.IAccountCustomer accountCustomer = Framework.EF.SingletonIpl.GetInstance<marketplace.IplAccountCustomer>();
+    marketplace.INotification notification = Framework.EF.SingletonIpl.GetInstance<marketplace.IplNotification>();
+    if (mems != null)
+    {
+        accountData = accountCustomer.GetById(mems.AccID);
+        listNotification = notification.GetListNotificationByUser(accountData.Id);
+    }
+    var resultDeposit = controller.ToLower() == "pa" && action.ToLower() == "deposit" ? true : false;
+    var resultCustom = controller.ToLower() == "pa" && action.ToLower() == "customer" ? true : false;
+    var resultWithdrawal = controller.ToLower() == "pa" && action.ToLower() == "withdrawal" ? true : false;
+    var resultSetting = controller.ToLower() == "pa" && action.ToLower() == "settings" ? true : false;
+    var resultAnalytics = controller.ToLower() == "pa" && action.ToLower() == "analytics" ? true : false;
+    var resultPerformance = controller.ToLower() == "pa" && action.ToLower() == "performance" ? true : false;
+    var resultSocialtrading = controller.ToLower() == "pa" && action.ToLower() == "socialtrading" ? true : false;
+    var resultInvest = controller.ToLower() == "pa" && action.ToLower() == "invest" ? true : false;
+    var resultHistory = controller.ToLower() == "pa" && action.ToLower() == "history" ? true : false;
+}
+<!doctype html>
+<html lang="en" data-layout="horizontal" data-layout-style="" data-layout-position="fixed" data-topbar="light">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>Dashboard- Exness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Assets/assets_partner/images/favicon.ico">
+    <link href="~/~/Assets/assets_partner/assets_partner/css/app.min.css" rel="stylesheet" />
+    <!-- plugin css -->
+    <link href="~/Assets/assets_partner/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Layout config Js -->
+    <script src="~/Assets/assets_partner/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/Assets/assets_partner/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/Assets/assets_partner/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/Assets/assets_partner/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/Assets/assets_partner/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .nav-link span {
+            font-size: 13px;
+        }
+    </style>
+    @RenderSection("css", required: false)
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <header id="page-topbar">
+            <div class="layout-width">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box horizontal-logo">
+                            <a href="index.html" class="logo logo-dark">
+                                <img src="~/Assets/assets_partner/images/logo_partner.svg" />
+                            </a>
+
+                            <a href="index.html" class="logo logo-light">
+                                <img src="~/Assets/assets_partner/images/logo_partner.svg" />
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger shadow-none" id="topnav-hamburger-icon">
+                            <span class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-notifications-dropdown" style="color: #fff" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-bell fs-20"></i>
+                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger" style="right: 7px !important; top: 12px !important;padding: 4px !important;"><span class="visually-hidden">unread messages</span></span>
+                            </button>
+                        </div>
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                            <button type="button" class="btn shadow-none" style="color: #fff !important" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                @PTEcommerce.Business.Helper.NumberFormat(accountData.AmountAvaiable) USD
+                            </button>
+                            <div style="width: 300px" class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" aria-labelledby="page-header-cart-dropdown">
+
+                                <div data-simplebar="init" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" style="background: linear-gradient(312.69turn, rgb(250, 249, 254) 40.24%, rgb(241, 237, 253) 100%); padding: 24px 20px 20px 44px ">
+                                            <h4>@PTEcommerce.Business.Helper.NumberFormat(accountData.AmountAvaiable) USD</h4>
+                                            <span class="small mb-3">Tổng số dư USD</span>
+                                            <div class="row mt-3">
+                                                <div class="col"><button type="button" class="btn" style="color: #000; box-shadow: none; background-color: rgb(255, 207, 1)">Chuyển tiền</button></div>
+                                                <div class="col">
+                                                    <button type="button" class=" btn" style="color: rgb(63, 31, 132); box-shadow: none; border: 1px solid rgb(221, 216, 249) ">Rút tiền</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="/accounts/sign-out"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="css-gyb6p3"><path d="M12 8l0 4l2 2"></path><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5"></path></svg> Lịch sử giao dịch</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>             <div class="dropdown topbar-head-dropdown ms-1 header-item" style="width: 150px">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" style="color: #fff !important" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <svg style="fill: #fff; width: 20px; height: 20px" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1ej1s67" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AccountCircleIcon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path></svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" style="width: 150px;" aria-labelledby="page-header-cart-dropdown">
+
+                                <div data-simplebar="init" style="max-height: 300px;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <p class="m-0"><a href="/pa/settings"><svg width="20" height="20" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"  style="fill: rgb(125, 108, 186)"  viewBox="0 0 24 24" data-testid="SettingsIcon"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path></svg>
+                                                Tài khoản</a></p>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="/accounts/sign-out"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" style="fill: rgb(125, 108, 186)" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" data-testid="LogoutIcon"><path d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path></svg> Đăng xuất</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- removeNotificationModal -->
+        <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="NotificationModalbtn-close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-2 text-center">
+                            <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                            <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                                <h4>Are you sure ?</h4>
+                                <p class="text-muted mx-4 mb-0">Are you sure you want to remove this Notification ?</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn w-sm btn-danger" id="delete-notification">Yes, Delete It!</button>
+                        </div>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- ========== App Menu ========== -->
+        <div class="app-menu navbar-menu">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <!-- Dark Logo-->
+                <a href="/" class="logo logo-dark">
+                    <img src="~/Assets/assets_partner/images/logo_partner.svg" />
+                </a>
+                <!-- Light Logo-->
+                <a href="/" class="logo logo-light">
+                    <img src="~/Assets/assets_partner/images/logo_partner.svg" />
+                </a>
+                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                    <i class="ri-record-circle-line"></i>
+
+                </button>
+            </div>
+
+            <div id="scrollbar">
+                <div class="container-fluid">
+
+                    <div id="two-column-menu">
+                    </div>
+                    <ul class="navbar-nav" id="navbar-nav">
+                        <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="/partners">
+                                <svg style="width: 16px" xmlns="http://www.w3.org/2000/svg" class="_28mBk _3aFcq" viewBox="0 0 16 16"><path d="M16,1V5a1,1,0,0,1-1,1H9A1,1,0,0,1,8,5V1A1,1,0,0,1,9,0h6A1,1,0,0,1,16,1ZM10,2V4h4V2ZM6,1V5A1,1,0,0,1,5,6H1A1,1,0,0,1,0,5V1A1,1,0,0,1,1,0H5A1,1,0,0,1,6,1ZM2,2V4H4V2ZM6,9v6a1,1,0,0,1-1,1H1a1,1,0,0,1-1-1V9A1,1,0,0,1,1,8H5A1,1,0,0,1,6,9ZM2,10v4H4V10ZM14,9h0a1,1,0,0,0-1-1H8v2h5A1,1,0,0,0,14,9Zm2,3h0a1,1,0,0,0-1-1H8v2h7A1,1,0,0,0,16,12Zm-3,3h0a1,1,0,0,0-1-1H8v2h4A1,1,0,0,0,13,15Z"></path></svg> <span data-key="t-dashboards">Bảng thông tin</span>
+                            </a>
+                        </li> <!-- end Dashboard Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                <svg width="16px" xmlns="http://www.w3.org/2000/svg" class="_2y5kl _3aFcq" viewBox="0 0 16 16"><path d="M6,9H4V7A1,1,0,0,1,5,6H5A1,1,0,0,1,6,7ZM8,4H8A1,1,0,0,0,7,5V9H9V5A1,1,0,0,0,8,4Zm3,1h0a1,1,0,0,0-1,1V9h2V6A1,1,0,0,0,11,5Zm5-4V12a1,1,0,0,1-1,1H12.25l.44867,1.79456a.97016.97016,0,0,1-1.88239.47058L10.25,13H5.75l-.56628,2.26514a.97016.97016,0,0,1-1.88239-.47058L3.75,13H1a1,1,0,0,1-1-1V1A1,1,0,0,1,1,0H15A1,1,0,0,1,16,1ZM14,2H2v9H14Z"></path></svg> <span data-key="t-dashboards">Báo cáo</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarDashboards">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="/partners/referal" class="nav-link" data-key="t-analytics"> Danh sách khách hàng </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/partners/history" class="nav-link" data-key="t-crm"> Lịch sử tiền thưởng  </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/partners/customertransfer" class="nav-link" data-key="t-crm"> Giao dịch khách hàng  </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li> <!-- end Dashboard Menu -->
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+
+            <div class="sidebar-background"></div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    @RenderBody()
+
+                </div>
+                <div class="container-fluid mt-5">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <ul style="list-style: none; font-size: 11px;">
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9;">Chính sách bảo mật</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Công khai rủi ro</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Ngăn chặn rửa tiền</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Trở thành Nhà môi giới giới thiệu (IB)</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Các hướng dẫn bảo mật</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Cơ sở kiến thức</a></li>
+                                <li style="margin-bottom: 10px"><a href="#" style="border-bottom: 1px solid #ddd8f9">Liên hệ</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-9" style="font-size: 11px">
+                            <p>E​xness (SC) Ltd là Nhà giao dịch chứng khoán được đăng ký tại Seychelles với số đăng ký 8423606-1 và được Cơ quan dịch vụ tài chính (FSA) cấp phép với số giấy phép SD025. Văn phòng đăng ký của E​xness (SC) Ltd đặt tại Tòa nhà CT 9A, tầng 2, Providence, Mahe, Seychelles.</p>
+
+                            <p> Exness B.V. là Công ty trung gian chứng khoán được đăng ký tại Curaçao với số đăng ký 148698 (0) và được Ngân hàng Trung ương Curaçao và Sint Maarten (CBCS) cấp phép với giấy phép số 0003LSI. Văn phòng đăng ký của Exness B.V. tại Emancipatie Boulevard Dominico F. “Don” Martina 31, Curaçao.</p>
+
+                            <p>Exness (VG) Ltd được Ủy ban Dịch vụ Tài chính (FSC) cấp phép tại BVI với số đăng ký 2032226 và số giấy phép kinh doanh đầu tư SIBA/L/20/1133. Văn phòng đăng ký của Exness (VG) Ltd tại Trinity Chambers, P.O. Box 4301, Road town, Tortola, BVI.</p>
+
+                            <p>Exness ZA (PTY) Ltd được Cơ quan kiểm soát ngành tài chính (FSCA) tại Nam Phi ủy quyền với tư cách là Nhà cung cấp dịch vụ tài chính (FSP) với số đăng ký là 2020/234138/07 và số FSP là 51024.</p>
+
+                            <p>Tadenex Limited được đăng ký tại Kenya với số đăng ký PVT-LRUDJJB và được Cơ quan Quản lý Thị trường vốn tại Kenya quản lý với tư cách là Công ty môi giới ngoại hối trực tuyến phi giao dịch theo số giấy phép 162. Văn phòng đăng ký của Tadenex Limited đặt tại Courtyard, Tầng 2, General Mathenge Road, Westlands, Nairobi.</p>
+
+                            <p>Các cơ quan nói trên được ủy quyền chính thức để hoạt động theo thương hiệu và nhãn hiệu của Exness.</p>
+
+                            <p>Cảnh Báo Rủi Ro Chung: Các dịch vụ của chúng tôi liên quan đến các sản phẩm phái sinh (CFDs) phức tạp được giao dịch bên ngoài sàn giao dịch. Những sản phẩm này có mức rủi ro thua lỗ cao và nhanh do có sử dụng đòn bẩy, nên có thể không thích hợp đối với tất cả các nhà đầu tư. Trong mọi trường hợp, Exness sẽ không chịu trách nhiệm pháp lý đối với bất kỳ cá nhân hay tổ chức nào về bất kỳ tổn thất hay thiệt hại nào hoàn toàn hoặc một phần gây ra bởi, phát sinh từ, hoặc liên quan đến bất kỳ hoạt động đầu tư nào. Tìm hiểu thêm</p>
+
+                            <p>Thông tin trên trang web này không phải là lời khuyên đầu tư hoặc đề xuất hoặc chào mời tham gia vào bất kỳ hoạt động đầu tư nào.</p>
+
+                            <p>Chỉ có thể sao chép thông tin trên trang web này khi có sự cho phép rõ bằng văn bản của Exness.</p>
+                            <p>© 2008-2023 Exness.Bảo lưu mọi quyền.</p>
+                            <p>Email: <a href="#">partnership@exness.com</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+    <!--preloader-->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner-border text-primary avatar-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Assets/assets_partner/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/assets_partner/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Assets/assets_partner/libs/node-waves/waves.min.js"></script>
+    <script src="~/Assets/assets_partner/libs/feather-icons/feather.min.js"></script>
+    <script src="~/Assets/assets_partner/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/Assets/assets_partner/js/plugins.js"></script>
+
+    <!-- apexcharts -->
+    <script src="~/Assets/assets_partner/libs/apexcharts/apexcharts.min.js"></script>
+
+    <!-- Vector map-->
+    <script src="~/Assets/assets_partner/libs/jsvectormap/js/jsvectormap.min.js"></script>
+    <script src="~/Assets/assets_partner/libs/jsvectormap/maps/world-merc.js"></script>
+
+    <!-- Dashboard init -->
+    <script src="~/Assets/assets_partner/js/pages/dashboard-analytics.init.js"></script>
+
+    <!-- App js -->
+    <script src="~/Assets/assets_partner/js/app.js"></script>
+    <script src="~/Assets/controller/base.js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+    <script src="~/Assets/controller/accounting.js"></script>
+    <script src="/Assets/controller/@(controller).js?v=@DateTimeOffset.Now.ToUnixTimeSeconds()"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

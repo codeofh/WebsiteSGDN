@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dataAccount = (marketplace.AccountCustomer)ViewBag.Account;
+    var listBank = (List<marketplace.Banks>)ViewBag.ListBank;
+}
+
+<!-- Header -->
+<header class="container-fluid header">
+    <div class="row">
+        <div class="col">
+            <div class="logo-small">
+                <img src="~/Assets/assets/images/HAMEDIA.png" alt="" class="img mt-2" style="width: auto; height: 45px;">
+            </div>
+        </div>
+        <div class="col-auto align-self-center">
+            <button type="button" class="btn btn-link menu-btn text-color-theme mt-2">
+                <i class="bi bi-list size-24"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="main-container container">
+
+    <!-- profile picture -->
+    <div class="row  mb-4">
+        <div class="col-auto">
+            <figure class="avatar avatar-100 rounded mx-auto">
+                <img src="~/Assets/assets/images/Avatar12.png" alt="">
+            </figure>
+        </div>
+        <div class="col align-self-center">
+            <h5 class="text-white">@dataAccount.Username</h5>
+            <b class="text-white">
+                Số dư: <span class="moneyReload"></span>
+            </b>
+        </div>
+    </div>
+
+    <!-- add edit address form -->
+    <div class="row mb-3">
+        <div class="col">
+            <h5 class="mb-0 text-white">RÚT TIỀN</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-light shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <select class="form-select" id="sltBank">
+                                <option>Chọn ngân hàng</option>
+                                @if (listBank != null && listBank.Count > 0)
+                                {
+                                    foreach (var item in listBank)
+                                    {
+                                        <option value="@item.Id" @(item.Id == dataAccount.BankId ? "selected" : "")>@item.BankName</option>
+                                    }
+                                }
+                            </select>
+                            <label class="form-control-label" for="address1">Ngân hàng</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" value="@dataAccount.BankAccount" id="inputBankAccount">
+                            <label class="form-control-label" for="address2">Chủ tài khoản</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" value="@dataAccount.BankNumber" id="inputBankNumber">
+                            <label class="form-control-label" for="address3">Số tài khoản</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" inputmode="numeric" id="inputBankNumber">
+                            <label class="form-control-label" for="address3">Số tiền</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row h-100 mb-4">
+        <div class="col-12 d-grid"><a href="javascript:void(0)" id="btnWithdrawal" class="btn btn-lg btn-default shadow-sm">Rút tiền</a></div>
+    </div>
+</div>
